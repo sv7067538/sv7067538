@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Not 1</title>
+</head>
+<style>
+     /* Header Styles */
+     .header {
+            background-color: #9d1746;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .trending-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .trending-label {
+            background-color: #522231;
+            color: #fff;
+            padding: 10px 15px;
+            font-weight: normal;
+        }
+        .trending-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            overflow: hidden;
+            max-width: 300px;
+        }
+        .trending-text {
+            white-space: nowrap;
+        }
+        .date {
+            color: #ddd;
+            font-weight: bold;
+        }
+
+       /* Contenedor de las flechas (botones) */
+        .arrow-button {
+            background-color: #9d1746; 
+            display: flex; 
+            align-items: center;
+            justify-content: center; 
+            width: 30px;
+            height: 20px; 
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            position: absolute; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            border-radius: 0;
+            z-index: 1;
+        }
+
+        /* Flechas (iconos) */
+        .trending-arrows {
+            color: #fff;
+            font-size: 1.5em; 
+        }
+        .trending-content {
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+        }
+        .trending-text {
+            white-space: nowrap;
+            display: inline-block;
+            animation: scroll-left 10s linear infinite; 
+        }
+
+        /* Animación para el desplazamiento */
+        @keyframes scroll-left {
+            0% {
+                transform: translateX(100%); 
+            }
+            100% {
+                transform: translateX(-100%); 
+            }
+        }
+
+        /* Posición de las flechas */
+        .left-arrow {
+            left: 0; 
+        }
+        .right-arrow {
+            right: 0;
+        }
+
+        /* Contenedor Logo y navegador */
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: #fff;
+        }
+        .logo {
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 2rem;
+        }
+        .valle {
+            color: #9d1746; 
+        }
+        .news {
+            color: black;
+        }
+
+        /* Estilos para el buscador */
+        .search-container {
+            display: flex;
+            align-items: center;
+        }
+        .search-container input {
+            padding: 10px;
+            font-size: 1rem;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 200px;
+            transition: all 0.3s ease;
+        }
+        .search-container input:focus {
+            border-color: #9d1746;
+            outline: none;
+        }
+        .search-container button {
+            padding: 10px 15px;
+            background-color: #9d1746;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .search-container button i {
+            font-size: 1.2rem; 
+        }
+        .search-container button:hover {
+            background-color: #522231;
+        }
+
+        /* Estilo de menú */
+        .nav-bar {
+            background-color: #9d1746;
+            padding: 10px 0;
+            position: sticky;
+            justify-content: center;
+            align-items: center;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;            
+            gap: 20px;
+        }
+        nav ul li {
+            position: relative;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            padding: 10px 20px;
+            display: block;
+
+        }
+        nav ul li a:hover {
+            background-color:#522231; 
+        }
+        /* Submenú */
+        .submenu {
+            display: none; 
+            background-color:#522231; 
+            border: 1px solid #ddd;
+            position: absolute;
+            top: 100%;
+            text-align: left;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            padding: 5px 0;
+        }
+        .categories.active .submenu {
+        display: block;  
+        }
+        .submenu a {
+            color: white;
+            display: block;
+            text-decoration: none;
+            justify-content: center;
+            align-items: center;
+        }
+        .submenu a:hover {
+            color: #d32f2f;
+        }
+        nav ul li a:hover {
+            color: #d32f2f;
+        }
+        .nav-bar .categories {
+            position: relative;  
+        }
+        .social {
+            display: flex;
+            gap: 15px;
+            margin-left: auto;
+            flex-wrap: wrap;  
+            justify-content: flex-end;  
+        }
+        .social a {
+            text-decoration: none;
+            font-size: 20px;
+            color: white;
+            border: 2px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            aspect-ratio: 1;
+            width: 1vw;
+            max-width: 60px;
+            min-width: 40px;
+            height: auto;
+            transition: background-color 0.3s ease;
+        }
+        .social a:hover {
+            background-color: #d32f2f;
+        }
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 30px;
+            color: white;
+            padding: 10px;
+        }
+        .menu-toggle:hover {
+            color: #d32f2f;
+        }
+   /* Estilos Generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 20px;
+    font-size: 40px;
+}
+h1{
+    text-align: center;
+}  
+/* Contenido Principal */
+.noticias-deportes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.noticia {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.noticia img {
+    width: 300px;
+    height: 200px;
+    object-fit: cover; /* opcional para mantener el aspecto */
+    text-align: center;
+}
+
+.noticia h2 {
+    margin: 15px;
+    font-size: 1.2em;
+    
+}
+
+.noticia p {
+    padding: 0 15px;
+    
+}
+
+.btn-leer-mas {
+    display: inline-block;
+    background-color:rgb(187, 20, 187);
+    color: white;
+    padding: 10px;
+    margin: 15px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.btn-leer-mas:hover {
+    background-color:darkmagenta;
+}
+
+/* Noticia Completa */
+.noticia-detalle {
+    max-width: 600px;
+    margin: 20px auto;
+    
+}
+
+.noticia-detalle img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+    
+}
+
+.noticia-detalle h2 {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+/*Footer Menu*/
+.logo-footer {
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            position: relative;
+            font-size:small;
+        }
+        .footer-menu {
+            position: relative;
+            background: #522231;
+        }
+        .footer-menu .container {
+            padding: 15px 0;
+            border-top: 1px solid #522231;
+        }
+        .footer-menu .f-menu {
+            font-size: 0;
+            text-align: center;
+        }
+        .footer-menu .f-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            margin-right: 15px;
+            padding-right: 15px;
+            border-right: 1px solid #ffffff;
+        }
+        .footer-menu .f-menu a:hover {
+            color: #FF6F61;
+        }
+        .footer-menu .f-menu a:last-child {
+            margin-right: 0;
+            padding-right: 0;
+            border-right: none;
+        }
+        /*Copyright*/
+
+        .footer-bottom {
+            position: relative;
+            background: #9d1746;
+        }
+        .footer-bottom .copyright {
+            text-align: center;
+            color: white;
+            
+        }
+        .footer-bottom .copyright a {
+            color: white;
+            text-decoration: none;
+        }
+        .footer-bottom .copyright a:hover{
+            color: #FF6F61;
+        }
+/* Footer Columns */
+.footer-columns {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .footer-columns div {
+            flex: 1;
+            min-width: 200px;
+            color: #fff;
+        }
+        .footer-columns div h4 {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .categories, .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        /* Estilo de los botones (accordion) */
+        .accordion {
+            background-color: #9d1746;
+            color: white;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.1rem;
+            border: 2px solid white; 
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .accordion:hover {
+            background-color: #522231; 
+            color: #FF6F61; 
+        }
+
+        .accordion.active {
+            background-color: #522231; 
+            color: #FF6F61; 
+        }
+
+        /* Estilos para los enlaces rápidos */
+        .quick-links {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .quick-links li {
+            margin: 8px 0;
+        }
+        .quick-links a {
+            color: #fff;
+            text-decoration: none; 
+            font-size: 1em;
+            transition: color 0.3s ease;
+        }
+        .quick-links a:hover {
+            color: #FF6F61; 
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: space-around;
+            }
+            .trending-section {
+                flex-wrap: wrap;
+                text-align: center;
+            }
+            .contact-section {
+                flex-direction: column;
+            }
+            .footer-columns {
+                flex-direction: column;
+            }
+            .news-section {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /*Footer Menu*/
+        .logo-footer {
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            position: relative;
+            font-size:small;
+        }
+        .footer-menu {
+            position: relative;
+            background: #522231;
+        }
+        .footer-menu .container {
+            padding: 15px 0;
+            border-top: 1px solid #522231;
+        }
+        .footer-menu .f-menu {
+            font-size: 0;
+            text-align: center;
+        }
+        .footer-menu .f-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            margin-right: 15px;
+            padding-right: 15px;
+            border-right: 1px solid #ffffff;
+        }
+        .footer-menu .f-menu a:hover {
+            color: #FF6F61;
+        }
+        .footer-menu .f-menu a:last-child {
+            margin-right: 0;
+            padding-right: 0;
+            border-right: none;
+        }
+        /*Copyright*/
+
+        .footer-bottom {
+            position: relative;
+            background: #9d1746;
+        }
+        .footer-bottom .copyright {
+            text-align: center;
+            color: white;
+            
+        }
+        .footer-bottom .copyright a {
+            color: white;
+            text-decoration: none;
+        }
+        .footer-bottom .copyright a:hover{
+            color: #FF6F61;
+        }
+        .center-img {
+            display: block;
+            margin: auto;
+            float: inline-start;
+            width: 900px;
+            height: 400px;
+        }
+        .tarjeta img{
+        float: inline-end;
+        width: 900px;
+        height: 400px;
+        margin-right: 20px;
+        }
+</style>
+<body>
+     <!-- Logo y navegador -->
+<div class="header-container">
+    <div class="logo">
+        <span class="valle">INFO</span><span class="news">SISTEMAS</span>
+    </div>
+    <div class="search-container">
+        <input type="text" placeholder="Buscar...">
+        <button><i class="fas fa-search"></i></button>
+    </div>
+</div>
+
+<!-- Navigation -->
+    <div class="nav-bar">
+        <nav>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i> 
+            </div>
+
+            <ul id="menu" class="menu">
+                <li><a href="./index.html">Inicio</a></li>
+                <li class="categories">
+                    <a href="#categorias">Categorías</a>
+                    <div class="submenu">
+                        <a href="#">Deporte</a>
+                        <a href="#">Entretenimiento</a>
+                        <a href="#">Ciencia</a>
+                        <a href="#">Tecnología</a>  
+                    </div>
+                </li>
+                <li><a href="#">Noticias Locales</a></li>
+                <li><a href="#">Noticias Internacionales</a></li>
+                <li><a href="./contacto.html">Contacto</a></li>
+            </ul>
+            <div class="social"> 
+                <a href=""><i class="fab fa-twitter"></i></a>
+                <a href=""><i class="fab fa-facebook-f"></i></a>
+                <a href=""><i class="fab fa-linkedin-in"></i></a>
+                <a href=""><i class="fab fa-instagram"></i></a>
+                <a href=""><i class="fab fa-youtube"></i></a>
+            </div> 
+        </nav>
+    </div>
+    <h1> El rapero 6ix9ine llegó a un nuevo acuerdo judicial para finalizar su sentencia en prisión</h1>
+    <img src="https://www.infobae.com/resizer/v2/4X7GA27M4QEDPUA6C2RBNI6NBA.jpg?auth=5d6dbba2a5d02a333d52d21d6859372da86f19f61f4c2b8bcae02cb15f1501fc&smart=true&width=992&height=661&quality=85" alt="Desc" class="center-img"> 
+    <p> Un artista marcado por la polémica y sus múltiples conflictos legales, se enfrenta a una nueva condena</p>
+    <p> La situación legal del rapero estadounidense Tekashi 6ix9ine, cuyo nombre real es Daniel Hernández, se complicó recientemente debido a diversas violaciones a su libertad condicional. En octubre, el rapero fue arrestado después de que su oficial de libertad condicional informara que había incumplido los términos de su supervisión, incluyendo realizar viajes sin autorización y no pasar pruebas de drogas obligatorias.</p>
+<p>Para resolver su situación legal actual, el rapero ha aceptado una condena que incluye un mes de prisión y tres meses adicionales bajo vigilancia. Según informaron los fiscales el miércoles, el acuerdo con el tribunal establece que cumplirá un mes en prisión, seguido de tres meses adicionales bajo restricciones. Durante este periodo, enfrentará un mes de confinamiento domiciliario, otro de detención domiciliaria (con mayores limitaciones de movimiento) y, finalmente, un mes con toque de queda y vigilancia electrónica. Este acuerdo fue delineado en una carta presentada ante el juez federal Paul A. Engelmayer, en Manhattan, quien otorgó un respaldo parcial al mismo.</p>
+<div class="tarjeta"> 
+<img src="data:image/jpeg;base64,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" alt="" class="tarjeta">
+    <p>El juez Engelmayer se encargará de sentenciar a Hernández en una audiencia programada para el 12 de noviembre, cuando el rapero deberá admitir formalmente las violaciones a los términos de su libertad condicional. Durante esta audiencia, el juez exigirá que ambas partes expliquen por qué esta sentencia es suficiente para las violaciones reiteradas de la libertad condicional. Esta exigencia del juez subraya su preocupación por los incumplimientos continuos de Hernández, a pesar de las condiciones que se le impusieron desde su liberación en 2020.</p>
+<p>El arresto reciente de Tekashi 6ix9ine, el 29 de octubre, fue consecuencia de varios incumplimientos en las condiciones de su libertad supervisada. Su oficial de libertad condicional había informado que el artista había violado los términos al viajar sin obtener el permiso requerido y por fallar en pruebas de drogas, según informó Associated Press. De acuerdo con esta misma fuente, el rapero estaba a solo unos meses de concluir su período de supervisión judicial cuando se presentaron estas violaciones, lo que llevó a su arresto en Nueva York.</p>
+<p> Tekashi 6ix9ine ha tenido un historial extenso de enfrentamientos legales, particularmente desde su condena en 2019 por su participación en actividades de crimen organizado junto a la pandilla Nine Trey Gangsta Bloods. En aquel momento, el juez Paul A. Engelmayer lo sentenció a dos años de prisión después de que el rapero se declarara culpable de los cargos de extorsión y otros delitos violentos relacionados con la pandilla. Sin embargo, el rapero fue liberado antes de cumplir su sentencia completa en abril de 2020, gracias a una petición basada en problemas de salud que lo hacían particularmente vulnerable al coronavirus.</p>
+<p> En una audiencia en octubre, el juez Engelmayer, quien le otorgó esa libertad compasiva previa, expresó su descontento con la aparente falta de compromiso de Hernández para cumplir con las condiciones impuestas desde su liberación compasiva, concedida debido a la pandemia. En su momento, Tekashi 6ix9ine se disculpó ante el juez, asegurando que “no era una mala persona”.</p>
+<p> Desde su liberación anticipada en 2020, Tekashi 6ix9ine ha estado bajo una estricta supervisión judicial que ha generado nuevos incidentes y detenciones adicionales. En enero de 2023, el rapero fue detenido en República Dominicana bajo cargos de violencia doméstica, y en octubre de este año fue nuevamente arrestado tras ser acusado de agredir a un productor musical en un incidente separado. Su condena actual, sin embargo, fue porque las autoridades lo detuvieron por estos cargos de violencia luego de diversas quejas de su oficial de libertad condicional, quien señaló que el rapero no estaba cumpliendo con las reglas establecidas, incluyendo la obtención de permisos anticipados para viajar y cumplir con pruebas de detección de drogas.</p>
+<div class="tarjeta"> 
+    <img src="https://www.infobae.com/resizer/v2/XGB3LEJERVA3PDILSD26QMW6DA.jpg?auth=0facf68199d9ea13479cd04a2593439081eb5b4855a0ee3a004f90cae32f4dd9&smart=true&width=992&height=558&quality=85" alt="" class="tarjeta"> 
+<h3> Carrera del rapero </h3>
+<p> Tekashi 6ix9ine, más conocido como 6ix9nine, es un rapero estadounidense, conocido por su imagen extravagante, sus coloridos tatuajes y su estilo de cabello multicolor. Alcanzó la fama en 2017 con el sencillo “Gummo”, que rápidamente se convirtió en un éxito viral, marcando el inicio de una carrera llena de controversias. Sus letras y estética, que reflejan una personalidad agresiva y desafiante, resonaron entre el público joven y lo posicionaron como uno de los artistas más populares del género urbano. Desde entonces, Tekashi ha lanzado otros sencillos populares como “Billy”, “Kooda” y “FEFE” junto a Nicki Minaj, logrando millones de reproducciones y una gran base de seguidores en redes sociales.Tekashi 6ix9ine, más conocido como 6ix9nine, es un rapero estadounidense, conocido por su imagen extravagante, sus coloridos tatuajes y su estilo de cabello multicolor. Alcanzó la fama en 2017 con el sencillo “Gummo”, que rápidamente se convirtió en un éxito viral, marcando el inicio de una carrera llena de controversias. Sus letras y estética, que reflejan una personalidad agresiva y desafiante, resonaron entre el público joven y lo posicionaron como uno de los artistas más populares del género urbano. Desde entonces, Tekashi ha lanzado otros sencillos populares como “Billy”, “Kooda” y “FEFE” junto a Nicki Minaj, logrando millones de reproducciones y una gran base de seguidores en redes sociales.</p>
+<p> A pesar de su éxito comercial, la carrera de Tekashi 6ix9ine ha estado marcada por constantes enfrentamientos legales y una compleja relación con la justicia. Su vínculo con la pandilla Nine Trey Gangsta Bloods y su participación en actividades delictivas le otorgaron notoriedad mediática, pero también lo llevaron a enfrentar múltiples cargos. Su colaboración con las autoridades en 2019, a cambio de una reducción de sentencia, fue altamente publicitada y lo convirtió en un personaje polémico, tanto dentro de la industria musical como en la cultura popular. A lo largo de su carrera, Tekashi ha utilizado la controversia como un motor de promoción, aunque su historial criminal ha puesto en riesgo su éxito y su libertad en repetidas ocasiones.</p>
+</div>
+<br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+      <!-- Footer -->
+<footer class="footer" style="background: #9d1746;">
+    <div class="footer-columns container">
+        <div>
+            <h4 class="logo-footer">INFOSISTEMAS</h4>
+            <div class="social">
+                <a href=""><i class="fab fa-twitter"></i></a>
+                <a href=""><i class="fab fa-facebook-f"></i></a>
+                <a href=""><i class="fab fa-linkedin-in"></i></a>
+                <a href=""><i class="fab fa-instagram"></i></a>
+                <a href=""><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+        <div>
+            <h4>Categorías</h4>
+            <section id="categorias"></section>
+            <div class="categories">
+                <button class="accordion">Política</button>
+                <button class="accordion">Corporativo</button>
+                <a href="./PaginaPrincipalDeportes.html"></a><button class="accordion">Deportes</button>
+                <button class="accordion">Salud</button>
+                <a href="./Educacion.html"><button class="accordion">Educación</button></a>
+                <button class="accordion">Ciencia</button>
+                <button class="accordion">Tecnología</button>
+                <a href="./PaginaPrincipalEntretenimiento.html"></a><button class="accordion">Entretenimiento</button>
+            </div>            
+        </div>
+        <div>
+            <h4>Etiquetas</h4>
+            <div class="tags">
+                <button class="accordion">Politica</button>
+                <button class="accordion">Corporativo</button>
+                <a href="./PaginaPrincipalDeportes.html"></a><button class="accordion">Deportes</button>
+                <button class="accordion">Salud</button>
+                <a href="./Educacion.html">
+                    <button class="accordion">Educación</button>
+                </a>
+                <button class="accordion">Ciencia</button>
+                <button class="accordion">Tecnología</button>
+                <a href="./PaginaPrincipalEntretenimiento.html"></a><button class="accordion">Entretenimiento</button>
+            </div>
+        </div>
+        <div>
+            <div>
+                <h4>Enlaces rápidos</h4>
+                <ul class="quick-links">
+                    <li><a href="./Acerca de.html">Acerca de</a></li>                 
+                    <li><a href="./privacidadpolitica.html">Privacidad y política</a></li>
+                    <li><a href="./TerminosyCondiciones.html">Términos y condiciones</a></li>
+                </ul>
+            </div>
+            
+        </div>
+        
+        </div>
+        <br>
+        <br>
+        <div class="footer-menu">
+            <div class="container">
+                <div class="f-menu">
+                    <a href="./Terminosdeuso.html">Términos de uso</a>
+                    <a href="./privacidadpolitica.html">Política de privacidad</a>
+                    <a href="./cookies.html">Cookies</a>
+                    <a href="./Accesibilidad.html">Ayuda de accesibilidad</a>
+                    <a href="./Publicidadnosotros.html">Publicidad con nosotros</a>
+                    <a href="./contacto.html">Contáctanos</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+        <!-- Copyright -->
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="copyright">
+                        <p>Copyright &copy; <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">INFOSISTEMAS</a>. Todos los derechos reservados</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+</html>

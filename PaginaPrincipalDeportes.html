@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noticias de Deportes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<style>
+    /* Header Styles */
+    .header {
+            background-color: #9d1746;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .trending-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .trending-label {
+            background-color: #522231;
+            color: #fff;
+            padding: 10px 15px;
+            font-weight: normal;
+        }
+        .trending-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            overflow: hidden;
+            max-width: 300px;
+        }
+        .trending-text {
+            white-space: nowrap;
+        }
+        .date {
+            color: #ddd;
+            font-weight: bold;
+        }
+
+       /* Contenedor de las flechas (botones) */
+        .arrow-button {
+            background-color: #9d1746; 
+            display: flex; 
+            align-items: center;
+            justify-content: center; 
+            width: 30px;
+            height: 20px; 
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            position: absolute; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            border-radius: 0;
+            z-index: 1;
+        }
+
+        /* Flechas (iconos) */
+        .trending-arrows {
+            color: #fff;
+            font-size: 1.5em; 
+        }
+        .trending-content {
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+        }
+        .trending-text {
+            white-space: nowrap;
+            display: inline-block;
+            animation: scroll-left 10s linear infinite; 
+        }
+
+        /* Animación para el desplazamiento */
+        @keyframes scroll-left {
+            0% {
+                transform: translateX(100%); 
+            }
+            100% {
+                transform: translateX(-100%); 
+            }
+        }
+
+        /* Posición de las flechas */
+        .left-arrow {
+            left: 0; 
+        }
+        .right-arrow {
+            right: 0;
+        }
+
+        /* Contenedor Logo y navegador */
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: #fff;
+        }
+        .logo {
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 2rem;
+        }
+        .valle {
+            color: #9d1746; 
+        }
+        .news {
+            color: black;
+        }
+
+        /* Estilos para el buscador */
+        .search-container {
+            display: flex;
+            align-items: center;
+        }
+        .search-container input {
+            padding: 10px;
+            font-size: 1rem;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 200px;
+            transition: all 0.3s ease;
+        }
+        .search-container input:focus {
+            border-color: #9d1746;
+            outline: none;
+        }
+        .search-container button {
+            padding: 10px 15px;
+            background-color: #9d1746;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .search-container button i {
+            font-size: 1.2rem; 
+        }
+        .search-container button:hover {
+            background-color: #522231;
+        }
+
+        /* Estilo de menú */
+        .nav-bar {
+            background-color: #9d1746;
+            padding: 10px 0;
+            position: sticky;
+            justify-content: center;
+            align-items: center;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;            
+            gap: 20px;
+        }
+        nav ul li {
+            position: relative;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            padding: 10px 20px;
+            display: block;
+
+        }
+        nav ul li a:hover {
+            background-color:#522231; 
+        }
+        /* Submenú */
+        .submenu {
+            display: none; 
+            background-color:#522231; 
+            border: 1px solid #ddd;
+            position: absolute;
+            top: 100%;
+            text-align: left;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            padding: 5px 0;
+        }
+        .categories.active .submenu {
+        display: block;  
+        }
+        .submenu a {
+            color: white;
+            display: block;
+            text-decoration: none;
+            justify-content: center;
+            align-items: center;
+        }
+        .submenu a:hover {
+            color: #d32f2f;
+        }
+        nav ul li a:hover {
+            color: #d32f2f;
+        }
+        .nav-bar .categories {
+            position: relative;  
+        }
+        .social {
+            display: flex;
+            gap: 15px;
+            margin-left: auto;
+            flex-wrap: wrap;  
+            justify-content: flex-end;  
+        }
+        .social a {
+            text-decoration: none;
+            font-size: 20px;
+            color: white;
+            border: 2px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            aspect-ratio: 1;
+            width: 1vw;
+            max-width: 60px;
+            min-width: 40px;
+            height: auto;
+            transition: background-color 0.3s ease;
+        }
+        .social a:hover {
+            background-color: #d32f2f;
+        }
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 30px;
+            color: white;
+            padding: 10px;
+        }
+        .menu-toggle:hover {
+            color: #d32f2f;
+        }
+   /* Estilos Generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Contenido Principal */
+.noticias-deportes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.noticia {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.noticia img {
+    width: 300px;
+    height: 200px;
+    object-fit: cover; /* opcional para mantener el aspecto */
+}
+
+.noticia h2 {
+    margin: 15px;
+    font-size: 1.2em;
+}
+
+.noticia p {
+    padding: 0 15px;
+}
+
+.btn-leer-mas {
+    display: inline-block;
+    background-color:rgb(187, 20, 187);
+    color: white;
+    padding: 10px;
+    margin: 15px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.btn-leer-mas:hover {
+    background-color:darkmagenta;
+}
+
+/* Noticia Completa */
+.noticia-detalle {
+    max-width: 600px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.noticia-detalle img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.noticia-detalle h2 {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+/*Footer Menu*/
+.logo-footer {
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            position: relative;
+            font-size:small;
+        }
+        .footer-menu {
+            position: relative;
+            background: #522231;
+        }
+        .footer-menu .container {
+            padding: 15px 0;
+            border-top: 1px solid #522231;
+        }
+        .footer-menu .f-menu {
+            font-size: 0;
+            text-align: center;
+        }
+        .footer-menu .f-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            margin-right: 15px;
+            padding-right: 15px;
+            border-right: 1px solid #ffffff;
+        }
+        .footer-menu .f-menu a:hover {
+            color: #FF6F61;
+        }
+        .footer-menu .f-menu a:last-child {
+            margin-right: 0;
+            padding-right: 0;
+            border-right: none;
+        }
+        /*Copyright*/
+
+        .footer-bottom {
+            position: relative;
+            background: #9d1746;
+        }
+        .footer-bottom .copyright {
+            text-align: center;
+            color: white;
+            
+        }
+        .footer-bottom .copyright a {
+            color: white;
+            text-decoration: none;
+        }
+        .footer-bottom .copyright a:hover{
+            color: #FF6F61;
+        }
+/* Footer Columns */
+.footer-columns {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .footer-columns div {
+            flex: 1;
+            min-width: 200px;
+            color: #fff;
+        }
+        .footer-columns div h4 {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .categories, .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        /* Estilo de los botones (accordion) */
+        .accordion {
+            background-color: #9d1746;
+            color: white;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.1rem;
+            border: 2px solid white; 
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .accordion:hover {
+            background-color: #522231; 
+            color: #FF6F61; 
+        }
+
+        .accordion.active {
+            background-color: #522231; 
+            color: #FF6F61; 
+        }
+
+        /* Estilos para los enlaces rápidos */
+        .quick-links {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .quick-links li {
+            margin: 8px 0;
+        }
+        .quick-links a {
+            color: #fff;
+            text-decoration: none; 
+            font-size: 1em;
+            transition: color 0.3s ease;
+        }
+        .quick-links a:hover {
+            color: #FF6F61; 
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: space-around;
+            }
+            .trending-section {
+                flex-wrap: wrap;
+                text-align: center;
+            }
+            .contact-section {
+                flex-direction: column;
+            }
+            .footer-columns {
+                flex-direction: column;
+            }
+            .news-section {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /*Footer Menu*/
+        .logo-footer {
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            position: relative;
+            font-size:small;
+        }
+        .footer-menu {
+            position: relative;
+            background: #522231;
+        }
+        .footer-menu .container {
+            padding: 15px 0;
+            border-top: 1px solid #522231;
+        }
+        .footer-menu .f-menu {
+            font-size: 0;
+            text-align: center;
+        }
+        .footer-menu .f-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            margin-right: 15px;
+            padding-right: 15px;
+            border-right: 1px solid #ffffff;
+        }
+        .footer-menu .f-menu a:hover {
+            color: #FF6F61;
+        }
+        .footer-menu .f-menu a:last-child {
+            margin-right: 0;
+            padding-right: 0;
+            border-right: none;
+        }
+        /*Copyright*/
+
+        .footer-bottom {
+            position: relative;
+            background: #9d1746;
+        }
+        .footer-bottom .copyright {
+            text-align: center;
+            color: white;
+            
+        }
+        .footer-bottom .copyright a {
+            color: white;
+            text-decoration: none;
+        }
+        .footer-bottom .copyright a:hover{
+            color: #FF6F61;
+        }
+</style>
+<body>
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noticias de Deportes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+ 
+
+
+    <!-- Logo y navegador -->
+<div class="header-container">
+    <div class="logo">
+        <span class="valle">INFO</span><span class="news">SISTEMAS</span>
+    </div>
+    <div class="search-container">
+        <input type="text" placeholder="Buscar...">
+        <button><i class="fas fa-search"></i></button>
+    </div>
+</div>
+
+<!-- Navigation -->
+    <div class="nav-bar">
+        <nav>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i> 
+            </div>
+
+            <ul id="menu" class="menu">
+                <li><a href="./index.html">Inicio</a></li>
+                <li class="categories">
+                    <a href="#categories">Categorías</a>
+                    <div class="submenu">
+                        <a href="./PaginaPrincipalDeportes.html">Deporte</a>
+                        <a href="./PaginaPrincipalEntretenimiento.html">Entretenimiento</a>
+                        <a href="#">Ciencia</a>
+                        <a href="#">Tecnología</a>  
+                    </div>
+                </li>
+                <li><a href="#">Noticias Locales</a></li>
+                <li><a href="#">Noticias Internacionales</a></li>
+                <li><a href="./contacto.html">Contacto</a></li>
+            </ul>
+            <div class="social"> 
+                <a href=""><i class="fab fa-twitter"></i></a>
+                <a href=""><i class="fab fa-facebook-f"></i></a>
+                <a href=""><i class="fab fa-linkedin-in"></i></a>
+                <a href=""><i class="fab fa-instagram"></i></a>
+                <a href=""><i class="fab fa-youtube"></i></a>
+            </div> 
+        </nav>
+    </div>
+
+    <h1> Noticias de Deportes </h1>
+    <!-- Contenido Principal -->
+    <main>
+        <section class="noticias-deportes">
+            <!-- Artículo 1 -->
+            <article class="noticia">
+                <img src="https://pxcdn.meridiano.net/082024/1724699427000.webp?cw=377&ch=212&extw=jpg" alt="" >
+                <h2>Shohei Ohtani y Aaron Judge encabezan la lista de finalistas para el MVP de la MLB</h2>
+                <p>Shohei Ohtani, el primer jugador 50-50 en la historia de las Grandes Ligas, y la amenaza de la Triple Corona Aaron Judge lideran los finalistas al Jugador Más Valioso de la liga revelados el lunes.</p>
+                <a href="./NotDeportes1.html" class="btn-leer-mas">Leer más</a>
+            </article>
+
+            <!-- Artículo 2 -->
+            <article class="noticia">
+                <img src="https://s2.sportstatics.com/relevo/www/multimedia/202408/11/media/cortadas/jayson-tatum-banquillo-ep-RAuOnzjhlUysot0Q99qDZKJ-1200x648@Relevo.jpg?w=569&h=320" alt="" >
+                <h2>Celtics enfrentan críticas tras la actuación de Jayson Tatum en los Juegos Olímpicos de París.</h2>
+                <p>El tres veces All Star y estrella de los Celtics, que hace sólo unos meses lograba el anillo de campeón de la NBA, ha tenido una participación escasa en la cita de París. </p>
+                <a href="./NotDeportes2.html" class="btn-leer-mas">Leer más</a>
+            </article>
+
+            <!-- Artículo 3 -->
+            <article class="noticia">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXQMmab7yXJ9G524Jb6InHcSbuhXln8v1QyA&s" alt="" >
+                <h2>Neeraj Chopra y Jan Zelezny</h2>
+                <p>El campeón olímpico indio de jabalina, Neeraj Chopra, ha contratado a la leyenda checa Jan Zelezny como su nuevo entrenador. Bajo la guía de Zelezny, Chopra busca perfeccionar aún más su técnica de lanzamiento para la próxima temporada​</p>
+                <a href="./NotDeportes3.html" class="btn-leer-mas">Leer más</a>
+            </article>
+
+            <!-- Artículo 4 -->
+            <article class="noticia">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRo7iQ9qD0x-NxNtggKf__CUlyFtJhr7F2-SA&s" alt="" >
+                <h2>¿Sergio Ramos al Real Madrid?: la circunstancia que lo hace posible mientras las redes ya especulan con ello</h2>
+                <p>Algunos reportes informan que Ramos, con 38 años ha tenido conversaciones con otros equipos, en su búsqueda por continuar su carrera, sin embargo, aún no hay nada oficial sobre su futuro. </p>
+                <a href="./NotDeportes4.html" class="btn-leer-mas">Leer más</a>
+            </article>
+
+            <!-- Artículo 5 -->
+            <article class="noticia">
+                <img src="https://pxcdn.reduno.com.bo/reduno/112024/1731431903574.webp?cw=800&ch=450&extw=jpg" alt="" >
+                <h2>Joven de 16 años vence al gigante del sumo en solo 11 segundos</h2>
+                <p>Kosei Motomura, con 16 años y solo 68 kilos, desafía las expectativas al derrotar en un combate histórico al experimentado Hikaru Amamidake, quien pesa más del doble que él, en el Gran Torneo de Sumo de Fukuoka.</p>
+                <a href="./NotDeportes5.html" class="btn-leer-mas">Leer más</a>
+            </article>
+
+            <!-- Artículo 6 -->
+            <article class="noticia">
+                <img src="https://estaticos-cdn.prensaiberica.es/clip/b5755b7e-d4a4-4e8c-af34-93bdf4f060df_alta-libre-aspect-ratio_default_0.jpg" alt="" >
+                <h2> Se genera polemica en Argentina tras el debut de un 'streamer' en el futbol profesional </h2>
+                <p> El 'streamer' de 24 años Iván Buhajeruk, mejor conocido como 'Spreen', fue titular por menos de un minuto en Deportivo Riestra, generando controversia en el partido contra Vélez Sarsfield.</p>
+                <a href="./NotDeportes6.html" class="btn-leer-mas">Leer más</a>
+            </article>
+
+            <!-- Artículo 7 -->
+            <article class="noticia">
+                <img src="https://eldia.com.bo/files/posts/2024-10-10/rafael-nadal-se-retira-del-tenis-al-finalizar-la-copa-davis-10-10-2024.jpg" alt="" >
+                <h2>Rafa Nadal anuncia su retirada del tenis: "Mi último torneo será la final de la Copa Davis 2024"</h2>
+                <p>El tenista español, doble campeón olímpico y ganador de 22 títulos de Grand Slam, anunció su retirada con un vídeo a través de sus redes sociales. Rafa Nadal confirmó que su último torneo será la Final de la Copa Davis 2024.</p>
+                <a href="./NotDeportes7.html" class="btn-leer-mas">Leer más</a>
+            </article>
+
+             <!-- Artículo 8 -->
+             <article class="noticia">
+                <img src="https://www.courier-journal.com/gcdn/authoring/images/smg/2024/11/12/SMGW/76216977007-91-2740622.jpeg?crop=3038,1710,x0,y186&width=660&height=371&format=pjpg&auto=webp" alt="" >
+                <h2>¿Cuándo sera la pelea entre Mike Tyson vs Jake Paul? Fecha y por qué se ha postergado</h2>
+                <p>Todo acerca de la pelea entre Mike Tyson y James Paul que será transmitida a través de Netflix.</p>
+                <a href="./NotDeportes8.html" class="btn-leer-mas">Leer más</a>
+            </article>
+
+            <!-- Artículo 9 -->
+            <article class="noticia">
+                <img src="https://unlocked.microsoft.com/wp-content/uploads/2023/04/alpine-car-1.jpg" alt="" >
+                <h2>La Fórmula 1 celebrará su 75º aniversario con una opulenta presentación para la temporada 2025</h2>
+                <p>En 2025, la Fórmula 1 romperá la tradicional presentación de los nuevos monoplazas por parte de cada equipo. En su lugar, el 'Gran Circo' organizará un evento en el O2 Arena de Londres, que contará con la presencia de todos los equipos, sus pilotos y jefes de equipo. </p>
+                <a href="./NotDeportes9.html" class="btn-leer-mas">Leer más</a>
+            </article>
+
+            <!-- Artículo 10 -->
+            <article class="noticia">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYqAgbKzP2W0H_rQcK88HPf4Dzic6NU8jjfNpo3Oxnx3eExGciLDncNiJiJbxJmK2ZSFc&usqp=CAU" alt="" >
+                <h2>Multan a una estrella de la NFL por usar una gorra con mensaje de apoyo a Donald Trump: "Valió la pena"</h2>
+                <p>La NFL ha multado a Nick Bosa, defensivo estelar de San Francisco 49ers, con 11.255 dólares por usar una gorra con la leyenda 'Make America Great Again' lema de la campaña a la presidencia de ese país de Donald Trump.</p>
+                <a href="./NotDeportes10.html" class="btn-leer-mas">Leer más</a>
+            </article>
+
+            <!-- Artículo 11 -->
+            <article class="noticia">
+                <img src="https://www.lavanguardia.com/files/image_449_220/uploads/2024/11/10/6730f94f709e9.jpeg" alt="" >
+                <h2>Javier Habans, prodigio desde los 8 años, gana el Mundial de ajedrez sub 16</h2>
+                <p>El español, invicto tras once rondas en Florianópolis (Brasil), empezando con seis victorias seguidas y que supo sufrir en momentos muy difíciles se hace con el campeonato mundial de ajedrez sub 16.</p>
+                <a href="./NotDeportes11.html" class="btn-leer-mas">Leer más</a>
+            </article>
+
+            <!-- Artículo 12 -->
+            <article class="noticia">
+                <img src="https://e.rpp-noticias.io/xlarge/2024/10/26/135913_1661378.webp" alt="" >
+                <h2>Como en los viejos tiempos...</h2>
+                <p>El Barcelona golea al Real Madrid en su visita al Santiago Bernabeu por 4 a 0 en su jornada de liga.</p>
+                <a href="./NotDeportes12.html" class="btn-leer-mas">Leer más</a>
+            </article>
+
+           
+        </section>
+    </main>
+<br>
+<br>
+<!-- Footer -->
+<footer class="footer" style="background: #9d1746;">
+    <div class="footer-columns container">
+        <div>
+            <h4 class="logo-footer">INFOSISTEMAS</h4>
+            <div class="social">
+                <a href=""><i class="fab fa-twitter"></i></a>
+                <a href=""><i class="fab fa-facebook-f"></i></a>
+                <a href=""><i class="fab fa-linkedin-in"></i></a>
+                <a href=""><i class="fab fa-instagram"></i></a>
+                <a href=""><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+        <div>
+            <h4>Categorías</h4>
+            <div class="categories">
+                <button class="accordion">Política</button>
+                <button class="accordion">Corporativo</button>
+                <a href="./PaginaPrincipalDeportes.html"></a><button class="accordion">Deportes</button>
+                <button class="accordion">Salud</button>
+                <a href="./Educacion.html"><button class="accordion">Educación</button></a>
+                <button class="accordion">Ciencia</button>
+                <button class="accordion">Tecnología</button>
+                <a href="./PaginaPrincipalEntretenimiento.html"></a><button class="accordion">Entretenimiento</button>
+            </div>            
+        </div>
+        <div>
+            <h4>Etiquetas</h4>
+            <div class="tags">
+                <button class="accordion">Politica</button>
+                <button class="accordion">Corporativo</button>
+                <a href="./PaginaPrincipalDeportes.html"></a><button class="accordion">Deportes</button>
+                <button class="accordion">Salud</button>
+                <a href="./Educacion.html">
+                    <button class="accordion">Educación</button>
+                </a>
+                <button class="accordion">Ciencia</button>
+                <button class="accordion">Tecnología</button>
+                <a href="./PaginaPrincipalEntretenimiento.html"></a><button class="accordion">Entretenimiento</button>
+            </div>
+        </div>
+        <div>
+            <div>
+                <h4>Enlaces rápidos</h4>
+                <ul class="quick-links">
+                    <li><a href="./Acerca de.html">Acerca de</a></li>                 
+                    <li><a href="./privacidadpolitica.html">Privacidad y política</a></li>
+                    <li><a href="./TerminosyCondiciones.html">Términos y condiciones</a></li>
+                </ul>
+            </div>
+            
+        </div>
+        
+        </div>
+        <br>
+        <br>
+        <div class="footer-menu">
+            <div class="container">
+                <div class="f-menu">
+                    <a href="./Terminosdeuso.html">Términos de uso</a>
+                    <a href="./privacidadpolitica.html">Política de privacidad</a>
+                    <a href="./cookies.html">Cookies</a>
+                    <a href="./Accesibilidad.html">Ayuda de accesibilidad</a>
+                    <a href="./Publicidadnosotros.html">Publicidad con nosotros</a>
+                    <a href="./contacto.html">Contáctanos</a>
+                </div>
+            </div>
+        </div>
+</footer>
+        <!-- Copyright -->
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="copyright">
+                        <p>Copyright &copy; <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">INFOSISTEMAS</a>. Todos los derechos reservados</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</body>
+</html>

@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Not 1</title>
+</head>
+<style>
+     /* Header Styles */
+     .header {
+            background-color: #9d1746;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .trending-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .trending-label {
+            background-color: #522231;
+            color: #fff;
+            padding: 10px 15px;
+            font-weight: normal;
+        }
+        .trending-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            overflow: hidden;
+            max-width: 300px;
+        }
+        .trending-text {
+            white-space: nowrap;
+        }
+        .date {
+            color: #ddd;
+            font-weight: bold;
+        }
+
+       /* Contenedor de las flechas (botones) */
+        .arrow-button {
+            background-color: #9d1746; 
+            display: flex; 
+            align-items: center;
+            justify-content: center; 
+            width: 30px;
+            height: 20px; 
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            position: absolute; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            border-radius: 0;
+            z-index: 1;
+        }
+
+        /* Flechas (iconos) */
+        .trending-arrows {
+            color: #fff;
+            font-size: 1.5em; 
+        }
+        .trending-content {
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+        }
+        .trending-text {
+            white-space: nowrap;
+            display: inline-block;
+            animation: scroll-left 10s linear infinite; 
+        }
+
+        /* Animación para el desplazamiento */
+        @keyframes scroll-left {
+            0% {
+                transform: translateX(100%); 
+            }
+            100% {
+                transform: translateX(-100%); 
+            }
+        }
+
+        /* Posición de las flechas */
+        .left-arrow {
+            left: 0; 
+        }
+        .right-arrow {
+            right: 0;
+        }
+
+        /* Contenedor Logo y navegador */
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: #fff;
+        }
+        .logo {
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 2rem;
+        }
+        .valle {
+            color: #9d1746; 
+        }
+        .news {
+            color: black;
+        }
+
+        /* Estilos para el buscador */
+        .search-container {
+            display: flex;
+            align-items: center;
+        }
+        .search-container input {
+            padding: 10px;
+            font-size: 1rem;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 200px;
+            transition: all 0.3s ease;
+        }
+        .search-container input:focus {
+            border-color: #9d1746;
+            outline: none;
+        }
+        .search-container button {
+            padding: 10px 15px;
+            background-color: #9d1746;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .search-container button i {
+            font-size: 1.2rem; 
+        }
+        .search-container button:hover {
+            background-color: #522231;
+        }
+
+        /* Estilo de menú */
+        .nav-bar {
+            background-color: #9d1746;
+            padding: 10px 0;
+            position: sticky;
+            justify-content: center;
+            align-items: center;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;            
+            gap: 20px;
+        }
+        nav ul li {
+            position: relative;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            padding: 10px 20px;
+            display: block;
+
+        }
+        nav ul li a:hover {
+            background-color:#522231; 
+        }
+        /* Submenú */
+        .submenu {
+            display: none; 
+            background-color:#522231; 
+            border: 1px solid #ddd;
+            position: absolute;
+            top: 100%;
+            text-align: left;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            padding: 5px 0;
+        }
+        .categories.active .submenu {
+        display: block;  
+        }
+        .submenu a {
+            color: white;
+            display: block;
+            text-decoration: none;
+            justify-content: center;
+            align-items: center;
+        }
+        .submenu a:hover {
+            color: #d32f2f;
+        }
+        nav ul li a:hover {
+            color: #d32f2f;
+        }
+        .nav-bar .categories {
+            position: relative;  
+        }
+        .social {
+            display: flex;
+            gap: 15px;
+            margin-left: auto;
+            flex-wrap: wrap;  
+            justify-content: flex-end;  
+        }
+        .social a {
+            text-decoration: none;
+            font-size: 20px;
+            color: white;
+            border: 2px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            aspect-ratio: 1;
+            width: 1vw;
+            max-width: 60px;
+            min-width: 40px;
+            height: auto;
+            transition: background-color 0.3s ease;
+        }
+        .social a:hover {
+            background-color: #d32f2f;
+        }
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 30px;
+            color: white;
+            padding: 10px;
+        }
+        .menu-toggle:hover {
+            color: #d32f2f;
+        }
+   /* Estilos Generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 20px;
+    font-size: 30px;
+}
+h1{
+    text-align: center;
+}  
+/* Contenido Principal */
+.noticias-deportes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.noticia {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.noticia img {
+    width: 300px;
+    height: 200px;
+    object-fit: cover; /* opcional para mantener el aspecto */
+    text-align: center;
+}
+
+.noticia h2 {
+    margin: 15px;
+    font-size: 1.2em;
+    
+}
+
+.noticia p {
+    padding: 0 15px;
+    
+}
+
+.btn-leer-mas {
+    display: inline-block;
+    background-color:rgb(187, 20, 187);
+    color: white;
+    padding: 10px;
+    margin: 15px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.btn-leer-mas:hover {
+    background-color:darkmagenta;
+}
+
+/* Noticia Completa */
+.noticia-detalle {
+    max-width: 600px;
+    margin: 20px auto;
+    
+}
+
+.noticia-detalle img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+    
+}
+
+.noticia-detalle h2 {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+/*Footer Menu*/
+.logo-footer {
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            position: relative;
+            font-size:small;
+        }
+        .footer-menu {
+            position: relative;
+            background: #522231;
+        }
+        .footer-menu .container {
+            padding: 15px 0;
+            border-top: 1px solid #522231;
+        }
+        .footer-menu .f-menu {
+            font-size: 0;
+            text-align: center;
+        }
+        .footer-menu .f-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            margin-right: 15px;
+            padding-right: 15px;
+            border-right: 1px solid #ffffff;
+        }
+        .footer-menu .f-menu a:hover {
+            color: #FF6F61;
+        }
+        .footer-menu .f-menu a:last-child {
+            margin-right: 0;
+            padding-right: 0;
+            border-right: none;
+        }
+        /*Copyright*/
+
+        .footer-bottom {
+            position: relative;
+            background: #9d1746;
+        }
+        .footer-bottom .copyright {
+            text-align: center;
+            color: white;
+            
+        }
+        .footer-bottom .copyright a {
+            color: white;
+            text-decoration: none;
+        }
+        .footer-bottom .copyright a:hover{
+            color: #FF6F61;
+        }
+/* Footer Columns */
+.footer-columns {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .footer-columns div {
+            flex: 1;
+            min-width: 200px;
+            color: #fff;
+        }
+        .footer-columns div h4 {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .categories, .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        /* Estilo de los botones (accordion) */
+        .accordion {
+            background-color: #9d1746;
+            color: white;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.1rem;
+            border: 2px solid white; 
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .accordion:hover {
+            background-color: #522231; 
+            color: #FF6F61; 
+        }
+
+        .accordion.active {
+            background-color: #522231; 
+            color: #FF6F61; 
+        }
+
+        /* Estilos para los enlaces rápidos */
+        .quick-links {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .quick-links li {
+            margin: 8px 0;
+        }
+        .quick-links a {
+            color: #fff;
+            text-decoration: none; 
+            font-size: 1em;
+            transition: color 0.3s ease;
+        }
+        .quick-links a:hover {
+            color: #FF6F61; 
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: space-around;
+            }
+            .trending-section {
+                flex-wrap: wrap;
+                text-align: center;
+            }
+            .contact-section {
+                flex-direction: column;
+            }
+            .footer-columns {
+                flex-direction: column;
+            }
+            .news-section {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /*Footer Menu*/
+        .logo-footer {
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            position: relative;
+            font-size:small;
+        }
+        .footer-menu {
+            position: relative;
+            background: #522231;
+        }
+        .footer-menu .container {
+            padding: 15px 0;
+            border-top: 1px solid #522231;
+        }
+        .footer-menu .f-menu {
+            font-size: 0;
+            text-align: center;
+        }
+        .footer-menu .f-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            margin-right: 15px;
+            padding-right: 15px;
+            border-right: 1px solid #ffffff;
+        }
+        .footer-menu .f-menu a:hover {
+            color: #FF6F61;
+        }
+        .footer-menu .f-menu a:last-child {
+            margin-right: 0;
+            padding-right: 0;
+            border-right: none;
+        }
+        /*Copyright*/
+
+        .footer-bottom {
+            position: relative;
+            background: #9d1746;
+        }
+        .footer-bottom .copyright {
+            text-align: center;
+            color: white;
+            
+        }
+        .footer-bottom .copyright a {
+            color: white;
+            text-decoration: none;
+        }
+        .footer-bottom .copyright a:hover{
+            color: #FF6F61;
+        }
+        .center-img {
+            display: block;
+            margin: auto;
+            float: inline-start;
+            width: 900px;
+            height: 400px;
+        }
+        .tarjeta img{
+        float: inline-end;
+        width: 900px;
+        height: 400px;
+        margin-right: 20px;
+        }
+</style>
+<body>
+     <!-- Logo y navegador -->
+<div class="header-container">
+    <div class="logo">
+        <span class="valle">INFO</span><span class="news">SISTEMAS</span>
+    </div>
+    <div class="search-container">
+        <input type="text" placeholder="Buscar...">
+        <button><i class="fas fa-search"></i></button>
+    </div>
+</div>
+
+<!-- Navigation -->
+    <div class="nav-bar">
+        <nav>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i> 
+            </div>
+
+            <ul id="menu" class="menu">
+                <li><a href="./index.html">Inicio</a></li>
+                <li class="categories">
+                    <a href="#categorias">Categorías</a>
+                    <div class="submenu">
+                        <a href="#">Deporte</a>
+                        <a href="#">Entretenimiento</a>
+                        <a href="#">Ciencia</a>
+                        <a href="#">Tecnología</a>  
+                    </div>
+                </li>
+                <li><a href="#">Noticias Locales</a></li>
+                <li><a href="#">Noticias Internacionales</a></li>
+                <li><a href="./contacto.html">Contacto</a></li>
+            </ul>
+            <div class="social"> 
+                <a href=""><i class="fab fa-twitter"></i></a>
+                <a href=""><i class="fab fa-facebook-f"></i></a>
+                <a href=""><i class="fab fa-linkedin-in"></i></a>
+                <a href=""><i class="fab fa-instagram"></i></a>
+                <a href=""><i class="fab fa-youtube"></i></a>
+            </div> 
+        </nav>
+    </div>
+    <h1> Multan a una estrella de la NFL por usar una gorra con mensaje de apoyo a Donald Trump: "Valió la pena" </h1>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYqAgbKzP2W0H_rQcK88HPf4Dzic6NU8jjfNpo3Oxnx3eExGciLDncNiJiJbxJmK2ZSFc&usqp=CAU" alt="Desc" class="center-img"> 
+    <p> La NFL ha multado a Nick Bosa, defensivo estelar de San Francisco 49ers, con 11.255 dólares por usar una gorra con la leyenda 'Make America Great Again' lema de la campaña a la presidencia de ese país de Donald Trump.</p>
+    <p> El jugador utilizó la gorra el 27 de octubre pasado, luego de la victoria que San Francisco logró sobre Dallas Cowboys en el Levi's Stadium de Santa Clara, California.    </p>
+<p> Lo hizo mientras sus compañeros George Kittle, Brock Purdy e Isaac Guerendo eran entrevistados por una reportera de la cadena NBC al final del partido. </p>
+<div class="tarjeta"> 
+    <img src="data:image/jpeg;base64,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" alt="" class="tarjeta">    
+<p> Bosa apareció por detrás de Purdy con dicha gorra de color blanco que tenía la leyenda 'Make America Great Again' en letras amarillas, aditamento que el cuatro veces Pro Bowl señaló entusiasta con sus dedos índice de ambas manos al tiempo que sonreía a la cámara.</p>
+    <p>La NFL dijo que la multa fue porque el designado Mejor Defensivo del 2022 infringió la regla 5 en el artículo 8 del reglamento.</p>
+<p> "Durante el período del día del juego en que un jugador sea visible para el estadio y la audiencia televisiva, los jugadores tienen prohibido usar, exhibir o transmitir de otra manera mensajes personales, ya sea por escrito o en ilustraciones, a menos que dicho mensaje haya sido aprobado previamente por la oficina de la Liga", fue la regla que incumplió Bosa.  </p>
+<p> A pesar de la sanción, el jugador de 27 años afirmó que fue un riesgo calculado el cual estaba dispuesto a asumir. "Fue algo que valió la pena. No voy a hablar demasiado sobre eso, pero creo que era un momento importante para decirlo", aseveró el exestrella de los Ohio State Buckeyes del fútbol colegial.</p>
+<p> Nick Bosa es el líder de la defensiva de San Francisco y uno de los capitanes del equipo al que llegó luego de ser seleccionado en la primera ronda del Draft 2019. </p>
+</div>
+<br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+       <!-- Footer -->
+<footer class="footer" style="background: #9d1746;">
+    <div class="footer-columns container">
+        <div>
+            <h4 class="logo-footer">INFOSISTEMAS</h4>
+            <div class="social">
+                <a href=""><i class="fab fa-twitter"></i></a>
+                <a href=""><i class="fab fa-facebook-f"></i></a>
+                <a href=""><i class="fab fa-linkedin-in"></i></a>
+                <a href=""><i class="fab fa-instagram"></i></a>
+                <a href=""><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+        <div>
+            <h4>Categorías</h4>
+            <section id="categorias"></section>
+            <div class="categories">
+                <button class="accordion">Política</button>
+                <button class="accordion">Corporativo</button>
+                <a href="./PaginaPrincipalDeportes.html"></a><button class="accordion">Deportes</button>
+                <button class="accordion">Salud</button>
+                <a href="./Educacion.html"><button class="accordion">Educación</button></a>
+                <button class="accordion">Ciencia</button>
+                <button class="accordion">Tecnología</button>
+                <a href="./PaginaPrincipalEntretenimiento.html"></a><button class="accordion">Entretenimiento</button>
+            </div>            
+        </div>
+        <div>
+            <h4>Etiquetas</h4>
+            <div class="tags">
+                <button class="accordion">Politica</button>
+                <button class="accordion">Corporativo</button>
+                <a href="./PaginaPrincipalDeportes.html"></a><button class="accordion">Deportes</button>
+                <button class="accordion">Salud</button>
+                <a href="./Educacion.html">
+                    <button class="accordion">Educación</button>
+                </a>
+                <button class="accordion">Ciencia</button>
+                <button class="accordion">Tecnología</button>
+                <a href="./PaginaPrincipalEntretenimiento.html"></a><button class="accordion">Entretenimiento</button>
+            </div>
+        </div>
+        <div>
+            <div>
+                <h4>Enlaces rápidos</h4>
+                <ul class="quick-links">
+                    <li><a href="./Acerca de.html">Acerca de</a></li>                 
+                    <li><a href="./privacidadpolitica.html">Privacidad y política</a></li>
+                    <li><a href="./TerminosyCondiciones.html">Términos y condiciones</a></li>
+                </ul>
+            </div>
+            
+        </div>
+        
+        </div>
+        <br>
+        <br>
+        <div class="footer-menu">
+            <div class="container">
+                <div class="f-menu">
+                    <a href="./Terminosdeuso.html">Términos de uso</a>
+                    <a href="./privacidadpolitica.html">Política de privacidad</a>
+                    <a href="./cookies.html">Cookies</a>
+                    <a href="./Accesibilidad.html">Ayuda de accesibilidad</a>
+                    <a href="./Publicidadnosotros.html">Publicidad con nosotros</a>
+                    <a href="./contacto.html">Contáctanos</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+        <!-- Copyright -->
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="copyright">
+                        <p>Copyright &copy; <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">INFOSISTEMAS</a>. Todos los derechos reservados</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+</html>

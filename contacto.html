@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="img/favicon.ico" rel="icon">
+</head>
+<style>
+     /* Contact Section */
+     .contact-section {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .contact-info {
+            max-width: 300px;
+            flex: 1;
+        }
+        .contact-info p {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            color: #333;
+        }
+        .contact-info i {
+            color: #d32f2f;
+            margin-right: 10px;
+        }
+        .contact-form {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .contact-form .row {
+            display: flex;
+            gap: 10px;
+        }
+        .contact-form input, .contact-form textarea {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+        }
+        .contact-form button {
+            background-color: #d32f2f;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: auto;
+        }
+        .contact-form button:hover {
+            background-color: #b71c1c;
+        }
+           /* Footer Columns */
+           .footer-columns {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .footer-columns div {
+            flex: 1;
+            min-width: 200px;
+            color: #fff;
+        }
+        .footer-columns div h4 {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .footer-columns .social-icons i {
+            font-size: 1.5em;
+            margin: 0 10px;
+            color: #9d1746;
+        }
+        .footer-columns .social-icons i:hover {
+            color: #522231;
+        }
+        .categories, .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .categories div, .tags div {
+            background-color: #e0e0e0;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            color: #333;
+            display: inline-block;
+        }
+         /* Responsive */
+         @media (max-width: 768px) {
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: space-around;
+            }
+            .trending-section {
+                flex-wrap: wrap;
+                text-align: center;
+            }
+            .contact-section {
+                flex-direction: column;
+            }
+            .footer-columns {
+                flex-direction: column;
+            }
+            .news-section {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /*Footer Menu*/
+        .footer-menu {
+            position: relative;
+            background: #522231;
+        }
+
+        .footer-menu .container {
+            padding: 15px 0;
+            border-top: 1px solid #522231;
+        }
+
+        .footer-menu .f-menu {
+            font-size: 0;
+            text-align: center;
+        }
+
+        .footer-menu .f-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            margin-right: 15px;
+            padding-right: 15px;
+            border-right: 1px solid #ffffff;
+        }
+
+        .footer-menu .f-menu a:hover {
+            color: #FF6F61;
+        }
+
+        .footer-menu .f-menu a:last-child {
+            margin-right: 0;
+            padding-right: 0;
+            border-right: none;
+        }
+
+        /*Copyright*/
+
+        .footer-bottom {
+            position: relative;
+            padding: 25px 0;
+            background: #9d1746;
+        }
+
+        .footer-bottom .copyright {
+            text-align: center;
+        }
+        .footer-bottom .copyright a:hover{
+            color: #FF6F61;
+        }
+</style>
+<body>
+    <!-- Contact Section -->
+ <div class="container">
+     <section class="contact-section">
+         <div class="contact-info">
+             <h2>Ponte en contacto</h2>
+             <p><i class="fas fa-map-marker-alt"></i>Nuestra Oficina: 123 Calle, La Paz, BOL</p>
+             <p><i class="fas fa-envelope"></i>Envíanos un correo: vallenews@gmail.com</p>
+             <p><i class="fas fa-phone"></i>Llámanos: +012 345 6789</p>
+         </div>
+         <br>
+         <form class="contact-form">
+             <div class="row">
+                 <input type="text" placeholder="Tu nombre">
+                 <input type="email" placeholder="Tu correo">
+             </div>
+             <input type="text" placeholder="Asunto">
+             <textarea placeholder="Mensaje"></textarea>
+             <button type="submit">Enviar mensaje</button>
+         </form>
+     </section>
+ </div>
+ <br>
+ <br>
+ <!-- Footer -->
+ <footer class="footer">
+     <div class="footer-columns container">
+         <div>
+             <div class="logo"></div>
+             <div class="social-icons">
+                 <i class="fab fa-facebook-f"></i>
+                 <i class="fab fa-twitter"></i>
+                 <i class="fab fa-linkedin-in"></i>
+                 <i class="fab fa-instagram"></i>
+             </div>
+         </div>
+         
+         <div>
+             <a href="./pruebas.html"> Volver a la pagina principal </a>
+             <br>
+             <br>
+     <div class="footer-menu">
+         <div class="container">
+             <div class="f-menu">
+                 <a href="">Términos de uso</a>
+                 <a href="">Política de privacidad</a>
+                 <a href="">Cookies</a>
+                 <a href="">Ayuda de accesibilidad</a>
+                 <a href="">Publicidad con nosotros</a>
+                 <a href="">Contáctanos</a>
+             </div>
+         </div>
+     </div>
+ </footer>
+     
+ </body>
+ </html>

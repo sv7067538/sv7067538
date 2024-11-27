@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Not 1</title>
+</head>
+<style>
+     /* Header Styles */
+     .header {
+            background-color: #9d1746;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .trending-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .trending-label {
+            background-color: #522231;
+            color: #fff;
+            padding: 10px 15px;
+            font-weight: normal;
+        }
+        .trending-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            overflow: hidden;
+            max-width: 300px;
+        }
+        .trending-text {
+            white-space: nowrap;
+        }
+        .date {
+            color: #ddd;
+            font-weight: bold;
+        }
+
+       /* Contenedor de las flechas (botones) */
+        .arrow-button {
+            background-color: #9d1746; 
+            display: flex; 
+            align-items: center;
+            justify-content: center; 
+            width: 30px;
+            height: 20px; 
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            position: absolute; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            border-radius: 0;
+            z-index: 1;
+        }
+
+        /* Flechas (iconos) */
+        .trending-arrows {
+            color: #fff;
+            font-size: 1.5em; 
+        }
+        .trending-content {
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+        }
+        .trending-text {
+            white-space: nowrap;
+            display: inline-block;
+            animation: scroll-left 10s linear infinite; 
+        }
+
+        /* Animación para el desplazamiento */
+        @keyframes scroll-left {
+            0% {
+                transform: translateX(100%); 
+            }
+            100% {
+                transform: translateX(-100%); 
+            }
+        }
+
+        /* Posición de las flechas */
+        .left-arrow {
+            left: 0; 
+        }
+        .right-arrow {
+            right: 0;
+        }
+
+        /* Contenedor Logo y navegador */
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: #fff;
+        }
+        .logo {
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 2rem;
+        }
+        .valle {
+            color: #9d1746; 
+        }
+        .news {
+            color: black;
+        }
+
+        /* Estilos para el buscador */
+        .search-container {
+            display: flex;
+            align-items: center;
+        }
+        .search-container input {
+            padding: 10px;
+            font-size: 1rem;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 200px;
+            transition: all 0.3s ease;
+        }
+        .search-container input:focus {
+            border-color: #9d1746;
+            outline: none;
+        }
+        .search-container button {
+            padding: 10px 15px;
+            background-color: #9d1746;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .search-container button i {
+            font-size: 1.2rem; 
+        }
+        .search-container button:hover {
+            background-color: #522231;
+        }
+
+        /* Estilo de menú */
+        .nav-bar {
+            background-color: #9d1746;
+            padding: 10px 0;
+            position: sticky;
+            justify-content: center;
+            align-items: center;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;            
+            gap: 20px;
+        }
+        nav ul li {
+            position: relative;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            padding: 10px 20px;
+            display: block;
+
+        }
+        nav ul li a:hover {
+            background-color:#522231; 
+        }
+        /* Submenú */
+        .submenu {
+            display: none; 
+            background-color:#522231; 
+            border: 1px solid #ddd;
+            position: absolute;
+            top: 100%;
+            text-align: left;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            padding: 5px 0;
+        }
+        .categories.active .submenu {
+        display: block;  
+        }
+        .submenu a {
+            color: white;
+            display: block;
+            text-decoration: none;
+            justify-content: center;
+            align-items: center;
+        }
+        .submenu a:hover {
+            color: #d32f2f;
+        }
+        nav ul li a:hover {
+            color: #d32f2f;
+        }
+        .nav-bar .categories {
+            position: relative;  
+        }
+        .social {
+            display: flex;
+            gap: 15px;
+            margin-left: auto;
+            flex-wrap: wrap;  
+            justify-content: flex-end;  
+        }
+        .social a {
+            text-decoration: none;
+            font-size: 20px;
+            color: white;
+            border: 2px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            aspect-ratio: 1;
+            width: 1vw;
+            max-width: 60px;
+            min-width: 40px;
+            height: auto;
+            transition: background-color 0.3s ease;
+        }
+        .social a:hover {
+            background-color: #d32f2f;
+        }
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 30px;
+            color: white;
+            padding: 10px;
+        }
+        .menu-toggle:hover {
+            color: #d32f2f;
+        }
+   /* Estilos Generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 20px;
+    font-size: 30px;
+}
+h1{
+    text-align: center;
+}  
+/* Contenido Principal */
+.noticias-deportes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.noticia {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.noticia img {
+    width: 300px;
+    height: 200px;
+    object-fit: cover; /* opcional para mantener el aspecto */
+    text-align: center;
+}
+
+.noticia h2 {
+    margin: 15px;
+    font-size: 1.2em;
+    
+}
+
+.noticia p {
+    padding: 0 15px;
+    
+}
+
+.btn-leer-mas {
+    display: inline-block;
+    background-color:rgb(187, 20, 187);
+    color: white;
+    padding: 10px;
+    margin: 15px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.btn-leer-mas:hover {
+    background-color:darkmagenta;
+}
+
+/* Noticia Completa */
+.noticia-detalle {
+    max-width: 600px;
+    margin: 20px auto;
+    
+}
+
+.noticia-detalle img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+    
+}
+
+.noticia-detalle h2 {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+/*Footer Menu*/
+.logo-footer {
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            position: relative;
+            font-size:small;
+        }
+        .footer-menu {
+            position: relative;
+            background: #522231;
+        }
+        .footer-menu .container {
+            padding: 15px 0;
+            border-top: 1px solid #522231;
+        }
+        .footer-menu .f-menu {
+            font-size: 0;
+            text-align: center;
+        }
+        .footer-menu .f-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            margin-right: 15px;
+            padding-right: 15px;
+            border-right: 1px solid #ffffff;
+        }
+        .footer-menu .f-menu a:hover {
+            color: #FF6F61;
+        }
+        .footer-menu .f-menu a:last-child {
+            margin-right: 0;
+            padding-right: 0;
+            border-right: none;
+        }
+        /*Copyright*/
+
+        .footer-bottom {
+            position: relative;
+            background: #9d1746;
+        }
+        .footer-bottom .copyright {
+            text-align: center;
+            color: white;
+            
+        }
+        .footer-bottom .copyright a {
+            color: white;
+            text-decoration: none;
+        }
+        .footer-bottom .copyright a:hover{
+            color: #FF6F61;
+        }
+/* Footer Columns */
+.footer-columns {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .footer-columns div {
+            flex: 1;
+            min-width: 200px;
+            color: #fff;
+        }
+        .footer-columns div h4 {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .categories, .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        /* Estilo de los botones (accordion) */
+        .accordion {
+            background-color: #9d1746;
+            color: white;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.1rem;
+            border: 2px solid white; 
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .accordion:hover {
+            background-color: #522231; 
+            color: #FF6F61; 
+        }
+
+        .accordion.active {
+            background-color: #522231; 
+            color: #FF6F61; 
+        }
+
+        /* Estilos para los enlaces rápidos */
+        .quick-links {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .quick-links li {
+            margin: 8px 0;
+        }
+        .quick-links a {
+            color: #fff;
+            text-decoration: none; 
+            font-size: 1em;
+            transition: color 0.3s ease;
+        }
+        .quick-links a:hover {
+            color: #FF6F61; 
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: space-around;
+            }
+            .trending-section {
+                flex-wrap: wrap;
+                text-align: center;
+            }
+            .contact-section {
+                flex-direction: column;
+            }
+            .footer-columns {
+                flex-direction: column;
+            }
+            .news-section {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /*Footer Menu*/
+        .logo-footer {
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            position: relative;
+            font-size:small;
+        }
+        .footer-menu {
+            position: relative;
+            background: #522231;
+        }
+        .footer-menu .container {
+            padding: 15px 0;
+            border-top: 1px solid #522231;
+        }
+        .footer-menu .f-menu {
+            font-size: 0;
+            text-align: center;
+        }
+        .footer-menu .f-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            margin-right: 15px;
+            padding-right: 15px;
+            border-right: 1px solid #ffffff;
+        }
+        .footer-menu .f-menu a:hover {
+            color: #FF6F61;
+        }
+        .footer-menu .f-menu a:last-child {
+            margin-right: 0;
+            padding-right: 0;
+            border-right: none;
+        }
+        /*Copyright*/
+
+        .footer-bottom {
+            position: relative;
+            background: #9d1746;
+        }
+        .footer-bottom .copyright {
+            text-align: center;
+            color: white;
+            
+        }
+        .footer-bottom .copyright a {
+            color: white;
+            text-decoration: none;
+        }
+        .footer-bottom .copyright a:hover{
+            color: #FF6F61;
+        }
+        .center-img {
+            display: block;
+            margin: auto;
+            float: inline-start;
+            width: 1000px;
+            height: 500px;
+        }
+        .tarjeta img{
+        float: inline-end;
+        width: 800px;
+        height: 500px;
+        margin-right: 20px;
+        }
+</style>
+<body>
+     <!-- Logo y navegador -->
+<div class="header-container">
+    <div class="logo">
+        <span class="valle">INFO</span><span class="news">SISTEMAS</span>
+    </div>
+    <div class="search-container">
+        <input type="text" placeholder="Buscar...">
+        <button><i class="fas fa-search"></i></button>
+    </div>
+</div>
+
+<!-- Navigation -->
+    <div class="nav-bar">
+        <nav>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i> 
+            </div>
+
+            <ul id="menu" class="menu">
+                <li><a href="./index.html">Inicio</a></li>
+                <li class="categories">
+                    <a href="#categorias">Categorías</a>
+                    <div class="submenu">
+                        <a href="#">Deporte</a>
+                        <a href="#">Entretenimiento</a>
+                        <a href="#">Ciencia</a>
+                        <a href="#">Tecnología</a>  
+                    </div>
+                </li>
+                <li><a href="#">Noticias Locales</a></li>
+                <li><a href="#">Noticias Internacionales</a></li>
+                <li><a href="./contacto.html">Contacto</a></li>
+            </ul>
+            <div class="social"> 
+                <a href=""><i class="fab fa-twitter"></i></a>
+                <a href=""><i class="fab fa-facebook-f"></i></a>
+                <a href=""><i class="fab fa-linkedin-in"></i></a>
+                <a href=""><i class="fab fa-instagram"></i></a>
+                <a href=""><i class="fab fa-youtube"></i></a>
+            </div> 
+        </nav>
+    </div>
+    <h1> Rafa Nadal anuncia su retirada del tenis: "Mi último torneo será la final de la Copa Davis 2024" </h1>
+    <img src="https://eldia.com.bo/files/posts/2024-10-10/rafael-nadal-se-retira-del-tenis-al-finalizar-la-copa-davis-10-10-2024.jpg" alt="Desc" class="center-img"> 
+    <p> El tenista español, doble campeón olímpico y ganador de 22 títulos de Grand Slam, anunció su retirada con un vídeo a través de sus redes sociales. Rafa Nadal confirmó que su último torneo será la Final de la Copa Davis 2024. </p>
+    
+    <p> Rafa Nadal anunció, mediante un vídeo, este jueves que se retira como tenista profesional. El de Manacor reconoció que estos últimos años no ha disfrutado ni rendido a su mejor nivel: "Han sido unos años difíciles, estos dos últimos especialmente. No he sido capaz de jugar sin limitaciones. Es una decisión difícil, me ha llevado tiempo tomarla".</p>
+<p> Rafa cree que, tras una larga carrera, ahora es el instante para dar paso a otra etapa en su vida: "Creo que es el momento adecuado para poner punto y final a una carrera larga y mucho más exitosa de lo que jamás esperé que sería".</p>
+    <p> En esta declaración, en la que anuncia su retirada definitiva del tenís, Nadal también anunció su último torneo al más alto nivel: "Me hace muchísima ilusión que mi último torneo sea la final de la Copa Davis, representando a mi país. Es cerrar el círculo porque una de mis primeras grandes alegrías como tenista profesional fue la final de Sevilla de 2024".</p>
+    <p> La presencia de figuras como el cantante Luck Ra en el palco y la atención mediática alrededor de este debut resaltan el interés del club en atraer público y seguidores. La polémica se acrecentó debido a los sacrificios que realizan los jóvenes futbolistas en divisiones menores para llegar a la elite, mientras que ‘Spreen’ accedió a este espacio en tiempo récord. Esta no es la primera estrategia de Deportivo Riestra para captar atención: el club también hizo debutar a un jugador de 14 años en la Copa Argentina, destacándose nuevamente por sus movidas mediáticas.</p>
+<p> “La realidad es que han sido unos años difíciles, estos dos últimos especialmente. Creo que no he sido capaz de jugar sin limitaciones. Es una decisión que evidentemente es difícil, que me ha llevado tiempo tomarla, pero en esta vida todo tiene un principio y un final y creo que es el momento adecuado para poner punto y final a lo que ha sido una carrera larga y mucho más exitosa de lo que jamás me hubiera podido imaginar”.</p>
+<div class="tarjeta"> 
+    <img src="data:image/jpeg;base64,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" alt="Desc" class="center-img"> 
+<p> El suizo Roger Federer, ganador de veinte Grand Slams, alabó la carrera de Rafael Nadal y aseguró que ha sido "un absoluto honor" haber competido contra él.</p>
+<p> "Qué carrera, Rafa. Siempre he deseado que este día no llegara. Gracias por los inolvidables recuerdos y por todos tus logros en el deporte que amamos. Ha sido un absoluto honor", dijo el helvético. Federer y Nadal completaron una de las rivalidades más bonitas de la historia del deporte, enfrentándose en cuarenta ocasiones, con 24 victorias para el español y 16 para el suizo.</p>
+<p> Para el recuerdo quedan sus duelos en Roland Garros, sus tres finales en Wimbledon, incluyendo la de 2008, considerada el mejor partido de la historia, así como la legendaria imagen que dejaron en la Copa Laver de 2022 en Londres, el último torneo en la carrera de Federer, en la que ambos terminaron llorando cogidos de la mano.</p>
+</div>
+<br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+        <!-- Footer -->
+<footer class="footer" style="background: #9d1746;">
+    <div class="footer-columns container">
+        <div>
+            <h4 class="logo-footer">INFOSISTEMAS</h4>
+            <div class="social">
+                <a href=""><i class="fab fa-twitter"></i></a>
+                <a href=""><i class="fab fa-facebook-f"></i></a>
+                <a href=""><i class="fab fa-linkedin-in"></i></a>
+                <a href=""><i class="fab fa-instagram"></i></a>
+                <a href=""><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+        <div>
+            <h4>Categorías</h4>
+            <section id="categorias"></section>
+            <div class="categories">
+                <button class="accordion">Política</button>
+                <button class="accordion">Corporativo</button>
+                <a href="./PaginaPrincipalDeportes.html"></a><button class="accordion">Deportes</button>
+                <button class="accordion">Salud</button>
+                <a href="./Educacion.html"><button class="accordion">Educación</button></a>
+                <button class="accordion">Ciencia</button>
+                <button class="accordion">Tecnología</button>
+                <a href="./PaginaPrincipalEntretenimiento.html"></a><button class="accordion">Entretenimiento</button>
+            </div>            
+        </div>
+        <div>
+            <h4>Etiquetas</h4>
+            <div class="tags">
+                <button class="accordion">Politica</button>
+                <button class="accordion">Corporativo</button>
+                <a href="./PaginaPrincipalDeportes.html"></a><button class="accordion">Deportes</button>
+                <button class="accordion">Salud</button>
+                <a href="./Educacion.html">
+                    <button class="accordion">Educación</button>
+                </a>
+                <button class="accordion">Ciencia</button>
+                <button class="accordion">Tecnología</button>
+                <a href="./PaginaPrincipalEntretenimiento.html"></a><button class="accordion">Entretenimiento</button>
+            </div>
+        </div>
+        <div>
+            <div>
+                <h4>Enlaces rápidos</h4>
+                <ul class="quick-links">
+                    <li><a href="./Acerca de.html">Acerca de</a></li>                 
+                    <li><a href="./privacidadpolitica.html">Privacidad y política</a></li>
+                    <li><a href="./TerminosyCondiciones.html">Términos y condiciones</a></li>
+                </ul>
+            </div>
+            
+        </div>
+        
+        </div>
+        <br>
+        <br>
+        <div class="footer-menu">
+            <div class="container">
+                <div class="f-menu">
+                    <a href="./Terminosdeuso.html">Términos de uso</a>
+                    <a href="./privacidadpolitica.html">Política de privacidad</a>
+                    <a href="./cookies.html">Cookies</a>
+                    <a href="./Accesibilidad.html">Ayuda de accesibilidad</a>
+                    <a href="./Publicidadnosotros.html">Publicidad con nosotros</a>
+                    <a href="./contacto.html">Contáctanos</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+        <!-- Copyright -->
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="copyright">
+                        <p>Copyright &copy; <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">INFOSISTEMAS</a>. Todos los derechos reservados</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+</html>

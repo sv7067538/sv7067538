@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acerca de... </title>
+    <style>
+         /* Header Styles */
+         .header {
+            background-color: #9d1746;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .trending-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .trending-label {
+            background-color: #522231;
+            color: #fff;
+            padding: 10px 15px;
+            font-weight: bold;
+        }
+        .trending-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            overflow: hidden;
+            max-width: 300px;
+        }
+        .trending-text {
+            white-space: nowrap;
+        }
+        .date {
+            color: #ddd;
+            font-weight: bold;
+        }
+        /* Follow Section*/
+
+        .follow-us {
+        width: 200px;
+        margin: 0 auto;
+        text-align: center;
+        }
+        .follow-us h2 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        .social-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9em;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+        .social-button i {
+            margin-right: 8px;
+        }
+        .facebook { background-color: #3b5998; }
+        .twitter { background-color: #55acee; }
+        .linkedin { background-color: #0077b5; }
+        .instagram { background-color: #e4405f; }
+        .youtube { background-color: #cd201f; }
+        .vimeo { background-color: #1ab7ea; }
+
+         /* Contenedor Logo y navegador */
+         .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: #fff;
+        }
+        .logo {
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 2rem;
+        }
+        .valle {
+            color: #9d1746; 
+        }
+        .news {
+            color: black;
+        }
+        body{
+            font-family:Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+            font-size: 25px;
+        }
+        /* Estilos para el buscador */
+        .search-container {
+            display: flex;
+            align-items: center;
+        }
+        .search-container input {
+            padding: 10px;
+            font-size: 1rem;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 200px;
+            transition: all 0.3s ease;
+        }
+        .search-container input:focus {
+            border-color: #9d1746;
+            outline: none;
+        }
+        .search-container button {
+            padding: 10px 15px;
+            background-color: #9d1746;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .search-container button i {
+            font-size: 1.2rem; 
+        }
+        .search-container button:hover {
+            background-color: #522231;
+        }
+        /* Estilo de menú */
+        .nav-bar {
+            background-color: #9d1746;
+            width: 100%;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            gap: 20px;
+        }
+        nav ul li {
+            margin: 0;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            padding: 15px;
+            display: inline-block;
+        }
+        nav ul li a:hover {
+            color: #d32f2f;
+        }
+        .social {
+            display: flex;
+            gap: 15px;
+            margin-left: auto;
+            flex-wrap: wrap;  
+            justify-content: flex-end;  
+        }
+        .social a {
+            text-decoration: none;
+            font-size: 20px;
+            color: white;
+            border: 2px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            aspect-ratio: 1;
+            width: 1vw;
+            max-width: 60px;
+            min-width: 40px;
+            height: auto;
+            transition: background-color 0.3s ease;
+        }
+        /* News Section */
+        .container-news {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .top-articles {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: space-between;
+        }
+        .top-articles div {
+            width: 24%;
+        }
+        .top-articles img {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .main-content {
+            display: flex;
+            gap: 20px;
+        }
+        .carousel {
+            position: relative;
+            width: 100%;
+            height: 350px;
+            overflow: hidden;
+            border-radius: 5px;
+        }
+                /*Footer Menu*/
+                .footer-menu {
+            position: relative;
+            background: #522231;
+        }
+
+        .footer-menu .container {
+            padding: 15px 0;
+            border-top: 1px solid #522231;
+        }
+
+        .footer-menu .f-menu {
+            font-size: 0;
+            text-align: center;
+        }
+
+        .footer-menu .f-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            margin-right: 15px;
+            padding-right: 15px;
+            border-right: 1px solid #ffffff;
+        }
+
+        .footer-menu .f-menu a:hover {
+            color: #FF6F61;
+        }
+
+        .footer-menu .f-menu a:last-child {
+            margin-right: 0;
+            padding-right: 0;
+            border-right: none;
+        }
+        
+    </style>
+</head>
+<body>
+<!-- Logo y navegador -->
+<div class="header-container">
+    <div class="logo">
+        <span class="valle">INFO</span><span class="news">SISTEMAS</span>
+    </div>
+    <div class="search-container">
+        <input type="text" placeholder="Buscar...">
+        <button><i class="fas fa-search"></i></button>
+    </div>
+</div>
+
+<!-- Navigation -->
+<div class="nav-bar">
+    <nav>
+        <ul>
+            <li><a href="#">Inicio</a></li>
+            <li><a href="#">Categorías</a></li>
+            <li><a href="#">Noticias Locales</a></li>
+            <li><a href="#">Noticias Internacionales</a></li>
+            <li><a href="./contacto.html">Contacto</a></li>
+        </ul>
+        <div class="social"> 
+            <a href=""><i class="fab fa-twitter"></i></a>
+            <a href=""><i class="fab fa-facebook-f"></i></a>
+            <a href=""><i class="fab fa-linkedin-in"></i></a>
+            <a href=""><i class="fab fa-instagram"></i></a>
+            <a href=""><i class="fab fa-youtube"></i></a>
+        </div> 
+    </nav>
+</div>
+
+</header>
+    <h1> Acerca de Nuestra Pagina de noticias web </h1>
+    <h2> InfoSistemas: Tu portal de noticias mas confiable </h2>
+    <p> Bienvenidos a InfoSistemas, el sitio web de noticias que te mantiene al tanto de los acontecimientos más relevantes del país y del mundo. Nuestro objetivo es ofrecerte información veraz, oportuna y de calidad para que estés siempre bien informado. Con una interfaz intuitiva y un diseño moderno, InfoSistemas es tu mejor aliado para acceder a las noticias más importantes desde cualquier tipo de dispositivo, ya sea tu computadora, tablet o smartphone.</p>
+<h2> Te ofrecemos...</h2>
+<p> <strong> Noticias de ultima hora: </strong> Accede a las noticias mas recientes del pais y del mundo en tiempo real. Nuestros periodistas estaran dispuestos a brindarte la mejor informacion acerca de todos los eventos que pasen en el momento. </p>
+<p> <strong> Categorías Diversas:</strong>  InfoSistemas divide la informacion en secciones ampliadas y especializadas en los distintos tipos de noticias como: </p>
+<ul>
+<li> <p> <strong> Deportes: </strong> Mantente actualizado acerca de toda la informacion acerca del mundo del deporte, entrevistas en vivo y exclusivas, resultados e informacion acerca de tus deportistas favoritos. </p> 
+</li>
+<li> <p> <strong> Politica: </strong> Obten informacion acerca de los temas mas relevantes dentro del mundo politico, con analisis y reportajes. </p></li>
+<li> <p> <strong> Corporativo: </strong> Informacion emitida por empresas y organizaciones hacia nosotros para brindarles a ustedes empleados, clientes, socios, inversionistas y al publico en general basicamente. Informacion acerca del mundo corporativo. </p></li>
+<li> <p> <strong> Entretenimiento: </strong> Obtendras las mejores noticias acerca del mundo del cine, espectalos, musica y mucho mas. </p></li>
+<li> <p> <strong> Salud: </strong> Nos enfocaremos en informarte acerca de los ultimos avances en la medicina, la innovacion en los tratamientos a las distintas enfermedades, nos adelantaremos a informarte acerca de todo esto y mas para que tu puedas obtener prevenciones para tu salud. </p></li>
+<li> <p> <strong> Educación: </strong> Nuestro portal ofrece las últimas noticias sobre reformas educativas, nuevas metodologías de enseñanza y el impacto de la tecnología educativa en las aulas. Descubre artículos sobre cómo las plataformas digitales están transformando el aprendizaje y cómo los avances pedagógicos están mejorando la experiencia educativa para estudiantes y maestros a nivel global.</p></li>
+<li> <p> <strong> Ciencia:  </strong>  Desde los avances en la medicina, hasta los misterios del universo. Te traemos las investigaciones más recientes, descubrimientos innovadores y entrevistas con expertos científicos. Ya sea sobre el cambio climático, la exploración espacial o la genética, en InfoSistemas te mantenemos al tanto de los desarrollos más importantes.</p></li>
+<li> <p> <strong> Tecnología: </strong> Acompáñanos para conocer cómo las startups y las grandes empresas están impulsando el progreso en el mundo digital, y cómo las nuevas tecnologías están cambiando nuestra forma de vivir, trabajar y comunicarnos. </p></li>
+</ul>
+<h3>¿Por Qué Elegirnos?</h3>
+<p> <strong>Actualización Constante: </strong>Nuestro portal se actualiza constantemente para que no te pierdas ningún detalle importante.
+  <p> <strong>Accesibilidad y Facilidad de Uso:</strong> Con un diseño responsivo, nuestra plataforma se adapta a cualquier dispositivo, garantizando una experiencia de navegación fluida.</p>  
+   <p> <strong> Personalización:</strong>  Regístrate en nuestro sitio para recibir notificaciones personalizadas sobre los temas que más te interesan.</p> 
+   <p> <strong>  Noticias Verificadas: </strong> Nos enorgullece ser una fuente confiable en un mundo lleno de desinformación.</p>
+
+   
+<footer class="footer" style="background: #9d1746;">
+    <div class="footer-columns container">
+        <a href="./pagina noticias.html"> Volver a la pagina principal </a>
+            <div class="footer-menu">
+                <div class="container">
+                    <div class="f-menu">
+                    <a href="./Terminosdeuso.html">Términos de uso</a>
+                    <a href="./privacidadpolitica.html">Política de privacidad</a>
+                    <a href="./cookies.html">Cookies</a>
+                    <a href="./Accesibilidad.html">Ayuda de accesibilidad</a>
+                    <a href="./Publicidadnosotros.html">Publicidad con nosotros</a>
+                    <a href="./contacto.html">Contáctanos</a>
+                </div>
+                </div>
+            </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noticias Locales</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="//fonts.googleapis.com/css2?family=Fredoka:wght@400;500&display=swap'"rel=font>
+    <link href="img/favicon.ico" rel="icon">
+</head>
+<style>
+    /* Estilos generales */
+    * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Fredoka', sans-serif;
+            font-weight: normal;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+            display: grid;
+            gap: 20px;
+        }
+        h4 {
+            font-weight: bold;
+            color: white;
+        }
+    
+        /* Estilos del Header */
+        .header {
+            background-color: #9d1746;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .trending-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .trending-label {
+            background-color: #522231;
+            color: #fff;
+            padding: 10px 15px;
+            font-weight: normal;
+        }
+        .trending-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            overflow: hidden;
+            max-width: 300px;
+        }
+        .trending-text {
+            white-space: nowrap;
+        }
+        .date {
+            color: #ddd;
+            font-weight: bold;
+        }
+       /* Contenedor de las flechas (botones) */
+        .arrow-button {
+            background-color: #9d1746; 
+            display: flex; 
+            align-items: center;
+            justify-content: center; 
+            width: 30px;
+            height: 20px; 
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            position: absolute; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            border-radius: 0;
+            z-index: 1;
+        }
+        /* Flechas (iconos) */
+        .trending-arrows {
+            color: #fff;
+            font-size: 1.5em; 
+        }
+        .trending-content {
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+        }
+        .trending-text {
+            white-space: nowrap;
+            display: inline-block;
+            animation: scroll-left 10s linear infinite; 
+        }
+        /* Animación para el desplazamiento */
+        @keyframes scroll-left {
+            0% {
+                transform: translateX(100%); 
+            }
+            100% {
+                transform: translateX(-100%); 
+            }
+        }
+        /* Posición de las flechas */
+        .left-arrow {
+            left: 0; 
+        }
+        .right-arrow {
+            right: 0;
+        }
+
+        /* Contenedor Logo y Navegador */
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: #fff;
+        }
+        .logo {
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 2rem;
+        }
+        .valle {
+            color: #9d1746; 
+        }
+        .news {
+            color: black;
+        }
+        /* Estilos para el buscador */
+        .search-container {
+            display: flex;
+            align-items: center;
+        }
+        .search-container input {
+            padding: 10px;
+            font-size: 1rem;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 200px;
+            transition: all 0.3s ease;
+        }
+        .search-container input:focus {
+            border-color: #9d1746;
+            outline: none;
+        }
+        .search-container button {
+            padding: 10px 15px;
+            background-color: #9d1746;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .search-container button i {
+            font-size: 1.2rem; 
+        }
+        .search-container button:hover {
+            background-color: #522231;
+        }
+
+        /* Estilo de Menú */
+        .nav-bar {
+            background-color: #9d1746;
+            position: sticky;
+            top: 0;
+            padding: 10px 0;
+            position: sticky;
+            justify-content: center;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;            
+            gap: 20px;
+        }
+        nav ul li {
+            position: relative;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            padding: 10px 20px;
+            display: block;
+
+        }
+        nav ul li a:hover {
+            background-color:#522231; 
+        }
+        /* Submenu */
+        .submenu {
+            display: none; 
+            background-color:#522231; 
+            border: 1px solid #ddd;
+            position: absolute;
+            top: 100%;
+            text-align: left;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            padding: 5px 0;
+        }
+        .categories.active .submenu {
+            display: block;
+        }
+        .submenu a {
+            color: white;
+            display: block;
+            text-decoration: none;
+            justify-content: center;
+            align-items: center;
+        }
+        .submenu a:hover {
+            color: #d32f2f;
+        }
+        nav ul li a:hover {
+            color: #d32f2f;
+        }
+        .nav-bar .categories {
+            position: relative;  
+        }
+        .social {
+            display: flex;
+            gap: 15px;
+            margin-left: auto;
+            flex-wrap: wrap;  
+            justify-content: flex-end;  
+        }
+        .social a {
+            text-decoration: none;
+            font-size: 20px;
+            color: white;
+            border: 2px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            aspect-ratio: 1;
+            width: 1vw;
+            max-width: 60px;
+            min-width: 40px;
+            height: auto;
+            transition: background-color 0.3s ease;
+        }
+        .social a:hover {
+            background-color: #d32f2f;
+        }
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 30px;
+            color: white;
+            padding: 10px;
+        }
+        .menu-toggle:hover {
+            color: #d32f2f;
+        }
+        /* Mostrar el menú hamburguesa en pantallas pequeñas */
+        @media (max-width: 768px) {
+            .menu {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;  
+                background-color: #9d1746;
+            }
+            .menu.active {
+                display: flex; 
+            }
+            .menu li {
+                border-bottom: 1px solid #522231;
+            }
+            .menu li a {
+                padding: 15px;
+                justify-content: center;
+                align-items: center;                  
+                display: block;
+            }
+            .menu-toggle {
+                display: block;  
+            }
+        }
+
+        /* Contenido Principal */
+        .noticias-deportes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .noticia {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            width: 300px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .noticia img {
+            width: 300px;
+            height: 200px;
+            object-fit: cover; /* opcional para mantener el aspecto */
+        }
+
+        .noticia h2 {
+            margin: 15px;
+            font-size: 1.2em;
+        }
+
+        .noticia p {
+            padding: 0 15px;
+        }
+
+        .btn-leer-mas {
+            display: inline-block;
+            background-color:rgb(187, 20, 187);
+            color: white;
+            padding: 10px;
+            margin: 15px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .btn-leer-mas:hover {
+            background-color:darkmagenta;
+        }
+
+        /* Noticia Completa */
+        .noticia-detalle {
+            max-width: 600px;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .noticia-detalle img {
+            width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        .noticia-detalle h2 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        /* Columnas del Footer */
+        .footer-columns {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .footer-columns div {
+            flex: 1;
+            min-width: 200px;
+            color: #fff;
+        }
+        .footer-columns div h4 {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .categories, .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        /* Estilo de los botones (accordion) */
+        .accordion {
+            background-color: #9d1746;
+            color: white;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.1rem;
+            padding: 2.5px;
+            border: 2px solid white; 
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .accordion:hover {
+            background-color: #522231; 
+            color: #FF6F61; 
+        }
+        .accordion.active {
+            background-color: #522231; 
+            color: #FF6F61; 
+        }
+
+        /* Estilos para los enlaces rápidos */
+        .quick-links {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .quick-links li {
+            margin: 8px 0;
+        }
+        .quick-links a {
+            color: #fff;
+            text-decoration: none; 
+            font-size: 1em;
+            transition: color 0.3s ease;
+        }
+        .quick-links a:hover {
+            color: #FF6F61; 
+        }
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: space-around;
+            }
+            .trending-section {
+                flex-wrap: wrap;
+                text-align: center;
+            }
+            .contact-section {
+                flex-direction: column;
+            }
+            .footer-columns {
+                flex-direction: column;
+            }
+            .news-section {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /*Footer Menu*/
+        .logo-footer {
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            position: relative;
+            font-size:small;
+        }
+        .footer-menu {
+            position: relative;
+            background: #522231;
+        }
+        .footer-menu .container {
+            padding: 15px 0;
+            border-top: 1px solid #522231;
+        }
+        .footer-menu .f-menu {
+            font-size: 0;
+            text-align: center;
+        }
+        .footer-menu .f-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            margin-right: 15px;
+            padding-right: 15px;
+            border-right: 1px solid #ffffff;
+        }
+        .footer-menu .f-menu a:hover {
+            color: #FF6F61;
+        }
+        .footer-menu .f-menu a:last-child {
+            margin-right: 0;
+            padding-right: 0;
+            border-right: none;
+        }
+
+        /*Copyright*/
+        .footer-bottom {
+            position: relative;
+            background: #9d1746;
+        }
+        .footer-bottom .copyright {
+            text-align: center;
+            color: white;   
+        }
+        .footer-bottom .copyright a {
+            color: white;
+            text-decoration: none;
+        }
+        .footer-bottom .copyright a:hover{
+            color: #FF6F61;
+        }
+</style>
+<body>
+ 
+   <!-- Fecha y Tendencias -->
+<header class="header">
+    <div class="trending-section">
+        <div class="trending-label">Tendencias</div>
+        <div class="trending-content">
+            <div class="arrow-button left-arrow">
+                <i class="fas fa-arrow-left trending-arrows" onclick="prevTrend()"></i>
+            </div>
+            <span class="trending-text" id="trend-text">Tendencia 1 | Tendencia 2 | Tendencia 3 | Tendencia 4</span>
+            <div class="arrow-button right-arrow">
+                <i class="fas fa-arrow-right trending-arrows" onclick="nextTrend()"></i>
+            </div>
+        </div>
+    </div>
+    <div class="date">Miercoles, 13 de noviembre de 2024</div>
+</header>
+
+<!-- Logo y Navegador -->
+<div class="header-container">
+    <div class="logo">
+        <span class="valle">INFO</span><span class="news">SISTEMAS</span>
+    </div>
+    <div class="search-container">
+        <input type="text" placeholder="Buscar...">
+        <button><i class="fas fa-search"></i></button>
+    </div>
+</div>
+
+<!-- Menu -->
+    <div class="nav-bar">
+        <nav>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i> 
+            </div>
+            <ul id="menu" class="menu">
+                <li><a href="./index.html">Inicio</a></li>
+                <li class="categories">
+                    <a href="#">Categorías</a>
+                    <div class="submenu">
+                        <a href="#">Política</a>  
+                        <a href="./PaginaPrincipalDeportes.html">Deporte</a>
+                        <a href="./PaginaPrincipalEntretenimiento.html">Entretenimiento</a>
+                        <a href="#">Ciencia</a>
+                        <a href="#">Salud</a>  
+                        <a href="./Educacion.html">Educación</a>  
+                        <a href="#">Tecnología</a>  
+                        <a href="#">Corporativo</a>  
+                    </div>
+                </li>
+                <li><a href="#">Noticias Locales</a></li>
+                <li><a href="#">Noticias Internacionales</a></li>
+                <li><a href="./contacto.html">Contacto</a></li>
+            </ul>
+            <div class="social"> 
+                <a href=""><i class="fab fa-twitter"></i></a>
+                <a href=""><i class="fab fa-facebook-f"></i></a>
+                <a href=""><i class="fab fa-linkedin-in"></i></a>
+                <a href=""><i class="fab fa-instagram"></i></a>
+                <a href=""><i class="fab fa-youtube"></i></a>
+            </div> 
+        </nav>
+    </div>
+    <!-- Scrip de funcionamiento del Menu -->
+    <script>
+        function toggleSubmenu(event) {
+            const categoriesMenu = document.querySelector('.categories');
+            const submenu = categoriesMenu.querySelector('.submenu');
+            
+            event.stopPropagation();
+            
+            categoriesMenu.classList.toggle('active');
+            
+            if (categoriesMenu.classList.contains('active')) {
+                submenu.style.display = 'block';  
+            } else {
+                submenu.style.display = 'none';  
+            }
+        }
+        function closeSubmenu(event) {
+            const categoriesMenu = document.querySelector('.categories');
+            const submenu = categoriesMenu.querySelector('.submenu');
+
+            if (!categoriesMenu.contains(event.target)) {
+                categoriesMenu.classList.remove('active');
+                submenu.style.display = 'none';  
+            }
+        }
+        document.querySelector('.categories').addEventListener('click', toggleSubmenu);
+        document.addEventListener('click', closeSubmenu);
+        function toggleMenu() {
+            const menu = document.getElementById("menu");
+            menu.classList.toggle("active");
+        }
+    </script>
+    <h1> Noticias Locales</h1>
+    <!-- Contenido Principal -->
+    <main>
+        <section class="noticias-deportes">
+            <!-- Artículo 1 -->
+            <article class="noticia">
+                <img src="https://www.la-razon.com/wp-content/uploads/2024/11/06/12/evistas.png" alt="" >
+                <h2>Es detenido el dirigente campesino Humberto Claros en Quillacollo</h2>
+                <p>La Policía Boliviana aprehendió este miércoles al dirigente evista del Movimiento Al Socialismo (MAS) Humberto Claros en el municipio de Quillacollo, en Cochabamba.
+                    Así lo denunció la dirigencia a través de un video publicado en la página de Facebook de radio Kawsachun Coca.</p>
+                <a href="./edpags/ed1.html" class="btn-leer-mas">Leer más</a>
+            </article>
+
+            <!-- Artículo 2 -->
+            <article class="noticia">
+                <img src="https://www.la-razon.com/wp-content/uploads/2024/11/13/18/Senado-ley-corta-TSE.jpg" alt="">
+                <h2>El Senado aprueba una ley corta para garantizar las elecciones judiciales de diciembre</h2>
+                <p>La Cámara de Senadores aprobó este miércoles un proyecto de ley corta con el objetivo de garantizar las elecciones judiciales ante el freno que puso el Tribunal Constitucional Plurinacional (TCP).</p>
+                <a href="./edpags/ed2.html" class="btn-leer-mas">Leer más</a>
+            </article>
+
+            <!-- Artículo 3 -->
+            <article class="noticia">
+                <img src="https://www.la-razon.com/wp-content/uploads/2024/11/13/17/manfred_sumate.png" alt="">
+                <h2>Reyes Villa dice que su candidatura a la presidencia está ‘casi’ consolidada</h2>
+                <p>“Todavía no (soy un candidato) consolidado, pero casi, casi consolidado. Estamos esperando poder tener suerte, para ser serios, un partido y sigla”, dijo en el programa Piedra, Papel y Tinta, de La Razón.</p>
+                <a href="./edpags/ed3.html" class="btn-leer-mas">Leer más</a>
+            </article>
+
+            <!-- Artículo 4 -->
+            <article class="noticia">
+                <img src="https://www.la-razon.com/wp-content/uploads/2024/10/21/15/Bloqueo-ev.jpeg" alt="">
+                <h2>Gerardo García admite pago a bloqueadores evistas con hasta Bs 150 diarios</h2>
+                <p>Gerardo García, en alusión al financiamiento de bloqueadores, dijo que “todo cuesta” y que los viáticos se traducen, incluso, en ollas comunes.</p>
+                <a href="./edpags/ed4.html" class="btn-leer-mas">Leer más</a>
+            </article>
+
+            <!-- Artículo 5 -->
+            <article class="noticia">
+                <img src="https://www.la-razon.com/wp-content/uploads/2024/11/13/16/Humberto-Claros.jpg" alt="">
+                <h2>Mea culpa de Claros sobre los bloqueos: ¡Por qué carajos no se ha levantado el pueblo!</h2>
+                <p>Entre el 14 de octubre y 6 de noviembre, el llamado Estado Mayor del Pueblo, que respalda al expresidente Evo Morales, propició la protesta que, en su pico, llegó a 24 puntos de bloqueo, de los cuales casi todos estaban concentrados en Cochabamba.</p>
+                <a href="./edpags/ed5.html" class="btn-leer-mas">Leer más</a>
+            </article>
+
+            <!-- Artículo 6 -->
+            <article class="noticia">
+                <img src="https://www.la-razon.com/wp-content/uploads/2024/10/25/16/Evo-encuentro.jpeg" alt="">
+                <h2>Evo se suma a la solicitud para que los vocales del TSE sean incorporados a la Ley 044</h2>
+                <p>El expresidente y jefe del Movimiento Al Socialismo (MAS), Evo Morales, se sumó al pedido de incorporar a los vocales del Tribunal Supremo Electoral a la Ley 044 para el juzgamiento de altas autoridades por juicio de responsabilidades.</p>
+                <a href="./edpags/ed6.html" class="btn-leer-mas">Leer más</a>
+            </article>
+           
+        </section>
+    </main>
+
+<!-- Footer -->
+<footer class="footer" style="background: #9d1746;">
+    <div class="footer-columns container">
+        <div>
+            <h4 class="logo-footer">INFOSISTEMAS</h4>
+            <div class="social">
+                <a href=""><i class="fab fa-twitter"></i></a>
+                <a href=""><i class="fab fa-facebook-f"></i></a>
+                <a href=""><i class="fab fa-linkedin-in"></i></a>
+                <a href=""><i class="fab fa-instagram"></i></a>
+                <a href=""><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+        <div>
+            <h4>Categorías</h4>
+            <div class="categories">
+                <button class="accordion">Política</button>
+                <button class="accordion">Corporativo</button>
+                <a href="./PaginaPrincipalDeportes.html"></a><button class="accordion">Deportes</button>
+                <button class="accordion">Salud</button>
+                <a href="./Educacion.html"><button class="accordion">Educación</button></a>
+                <button class="accordion">Ciencia</button>
+                <button class="accordion">Tecnología</button>
+                <a href="./PaginaPrincipalEntretenimiento.html"></a><button class="accordion">Entretenimiento</button>
+            </div>            
+        </div>
+        <div>
+            <h4>Etiquetas</h4>
+            <div class="tags">
+                <button class="accordion">Politica</button>
+                <button class="accordion">Corporativo</button>
+                <a href="./PaginaPrincipalDeportes.html"></a><button class="accordion">Deportes</button>
+                <button class="accordion">Salud</button>
+                <a href="./Educacion.html">
+                    <button class="accordion">Educación</button>
+                </a>
+                <button class="accordion">Ciencia</button>
+                <button class="accordion">Tecnología</button>
+                <a href="./PaginaPrincipalEntretenimiento.html"></a><button class="accordion">Entretenimiento</button>
+            </div>
+        </div>
+        <div>
+            <div>
+                <h4>Enlaces rápidos</h4>
+                <ul class="quick-links">
+                    <li><a href="./Acerca de.html">Acerca de</a></li>                 
+                    <li><a href="./privacidadpolitica.html">Privacidad y política</a></li>
+                    <li><a href="./TerminosyCondiciones.html">Términos y condiciones</a></li>
+                </ul>
+            </div>   
+        </div>
+        </div>
+        <br>
+        <br>
+        <div class="footer-menu">
+            <div class="container">
+                <div class="f-menu">
+                    <a href="./Terminosdeuso.html">Términos de uso</a>
+                    <a href="./privacidadpolitica.html">Política de privacidad</a>
+                    <a href="./cookies.html">Cookies</a>
+                    <a href="./Accesibilidad.html">Ayuda de accesibilidad</a>
+                    <a href="./Publicidadnosotros.html">Publicidad con nosotros</a>
+                    <a href="./contacto.html">Contáctanos</a>
+                </div>
+            </div>
+        </div>
+</footer>
+        <!-- Copyright -->
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="copyright">
+                        <p>Copyright &copy; <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">INFOSISTEMAS</a>. Todos los derechos reservados</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+</html>

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacidad y Politica</title>
+</head>
+<style>
+  /* Header Styles */
+  .header {
+            background-color: #9d1746;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .trending-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .trending-label {
+            background-color: #522231;
+            color: #fff;
+            padding: 10px 15px;
+            font-weight: bold;
+        }
+        .trending-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            overflow: hidden;
+            max-width: 300px;
+        }
+        .trending-text {
+            white-space: nowrap;
+        }
+        .date {
+            color: #ddd;
+            font-weight: bold;
+        }
+         /* Contenedor Logo y navegador */
+         .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: #fff;
+        }
+        .logo {
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 2rem;
+        }
+        .valle {
+            color: #9d1746; 
+        }
+        .news {
+            color: black;
+        }
+        body{
+            font-family:Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+            font-size: 25px;
+        }
+        /* Estilos para el buscador */
+        .search-container {
+            display: flex;
+            align-items: center;
+        }
+        .search-container input {
+            padding: 10px;
+            font-size: 1rem;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 200px;
+            transition: all 0.3s ease;
+        }
+        .search-container input:focus {
+            border-color: #9d1746;
+            outline: none;
+        }
+        .search-container button {
+            padding: 10px 15px;
+            background-color: #9d1746;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .search-container button i {
+            font-size: 1.2rem; 
+        }
+        .search-container button:hover {
+            background-color: #522231;
+        }
+        /* Estilo de menú */
+        .nav-bar {
+            background-color: #9d1746;
+            width: 100%;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            gap: 20px;
+        }
+        nav ul li {
+            margin: 0;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            padding: 15px;
+            display: inline-block;
+        }
+        nav ul li a:hover {
+            color: #d32f2f;
+        }
+        .social {
+            display: flex;
+            gap: 15px;
+            margin-left: auto;
+            flex-wrap: wrap;  
+            justify-content: flex-end;  
+        }
+        .social a {
+            text-decoration: none;
+            font-size: 20px;
+            color: white;
+            border: 2px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            aspect-ratio: 1;
+            width: 1vw;
+            max-width: 60px;
+            min-width: 40px;
+            height: auto;
+            transition: background-color 0.3s ease;
+        }
+        /* News Section */
+        .container-news {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .top-articles {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: space-between;
+        }
+        .top-articles div {
+            width: 24%;
+        }
+        .top-articles img {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .main-content {
+            display: flex;
+            gap: 20px;
+        }
+        .carousel {
+            position: relative;
+            width: 100%;
+            height: 350px;
+            overflow: hidden;
+            border-radius: 5px;
+        }
+                /*Footer Menu*/
+                .footer-menu {
+            position: relative;
+            background: #522231;
+        }
+
+        .footer-menu .container {
+            padding: 15px 0;
+            border-top: 1px solid #522231;
+        }
+
+        .footer-menu .f-menu {
+            font-size: 0;
+            text-align: center;
+        }
+
+        .footer-menu .f-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            margin-right: 15px;
+            padding-right: 15px;
+            border-right: 1px solid #ffffff;
+        }
+
+        .footer-menu .f-menu a:hover {
+            color: #FF6F61;
+        }
+
+        .footer-menu .f-menu a:last-child {
+            margin-right: 0;
+            padding-right: 0;
+            border-right: none;
+        }
+        
+    
+</style>
+<body> 
+    <!-- Logo y navegador -->
+<div class="header-container">
+    <div class="logo">
+        <span class="valle">INFO</span><span class="news">SISTEMAS</span>
+    </div>
+    <div class="search-container">
+        <input type="text" placeholder="Buscar...">
+        <button><i class="fas fa-search"></i></button>
+    </div>
+</div>
+
+<!-- Navigation -->
+<div class="nav-bar">
+    <nav>
+        <ul>
+            <li><a href="#">Inicio</a></li>
+            <li><a href="#">Categorías</a></li>
+            <li><a href="#">Noticias Locales</a></li>
+            <li><a href="#">Noticias Internacionales</a></li>
+            <li><a href="./contacto.html">Contacto</a></li>
+        </ul>
+        <div class="social"> 
+            <a href=""><i class="fab fa-twitter"></i></a>
+            <a href=""><i class="fab fa-facebook-f"></i></a>
+            <a href=""><i class="fab fa-linkedin-in"></i></a>
+            <a href=""><i class="fab fa-instagram"></i></a>
+            <a href=""><i class="fab fa-youtube"></i></a>
+        </div> 
+    </nav>
+</div> 
+<h2>Política de Privacidad y Condiciones de Uso</h2>
+<p>En InfoSistemas, nos comprometemos a proteger la privacidad de nuestros usuarios. Esta Política de Privacidad describe cómo recopilamos, utilizamos y compartimos la información personal que obtenemos de los visitantes de nuestro sitio web. Al acceder y utilizar nuestro sitio, usted acepta las prácticas descritas en esta política.</p>
+<h3> Recopilacion de datos y uso de cookies </h3>
+<p> Cuando visita nuestro sitio, recopilamos cierta información automáticamente a través de cookies y otras tecnologías de seguimiento. Esto incluye su dirección IP, el tipo de navegador que utiliza, las páginas que visita y el tiempo que pasa en nuestro sitio. Esta información nos ayuda a entender mejor cómo los usuarios interactúan con nuestro contenido y a mejorar la experiencia de navegación. Si prefiere no compartir estos datos, puede ajustar la configuración de su navegador para deshabilitar las cookies, aunque esto podría afectar algunas funciones del sitio.</p>
+<h3> Integridad de datos  </h3>
+<p> Nos asociamos con proveedores de servicios de confianza que nos ayudan a operar nuestro sitio, analizar el tráfico y mejorar nuestro contenido. Estos proveedores pueden tener acceso limitado a su información personal, siempre bajo estrictas medidas de seguridad y con el compromiso de proteger su privacidad.</p>
+<p> Mantenemos la seguridad de su información mediante medidas técnicas y organizativas avanzadas. Aun así, debido a la naturaleza de Internet, no podemos garantizar la seguridad absoluta de los datos transmitidos en línea. Recomendamos que tome precauciones adicionales al compartir información sensible en cualquier sitio web.</p>
+<p> Nuestro sitio puede contener enlaces a sitios web de terceros. No nos hacemos responsables por las prácticas de privacidad ni por el contenido de esos sitios externos. Le recomendamos que revise sus políticas de privacidad antes de proporcionarles cualquier información.</p>
+<h3> Politica de Privacidad </h3>
+<p> Usted tiene derechos sobre sus datos, incluyendo el acceso, la corrección y la eliminación de la información que hemos recopilado. Si desea ejercer alguno de estos derechos o tiene preguntas sobre nuestra política de privacidad, puede comunicarse con nosotros a traves de nuestro apartado de contactos. </p>
+<p> Esta Política de Privacidad puede ser actualizada periódicamente para reflejar cambios en nuestras prácticas o en la legislación aplicable. Cualquier cambio será publicado en esta página con una fecha de revisión actualizada. Le invitamos a revisar esta política regularmente para mantenerse informado sobre cómo protegemos su información. </p>
+<p> <strong> Gracias por confiar en InfoSistemas. Su privacidad es nuestra prioridad. </strong></p>
+
+<footer class="footer" style="background: #9d1746;">
+    <div class="footer-columns container">
+        <a href="./pagina noticias.html"> Volver a la pagina principal </a>
+            <div class="footer-menu">
+                <div class="container">
+                    <div class="f-menu">
+                        <a href="./Terminosdeuso.html">Términos de uso</a>
+                        <a href="./privacidadpolitica.html">Política de privacidad</a>
+                        <a href="./cookies.html">Cookies</a>
+                        <a href="./Accesibilidad.html">Ayuda de accesibilidad</a>
+                        <a href="./Publicidadnosotros.html">Publicidad con nosotros</a>
+                        <a href="./contacto.html">Contáctanos</a>
+                    </div>
+                </div>
+            </div>
+    </footer>
+</body>
+</html>
+</body>
+</html>

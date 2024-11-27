@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noticias de Deportes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<style>
+    /* Header Styles */
+    .header {
+            background-color: #9d1746;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .trending-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .trending-label {
+            background-color: #522231;
+            color: #fff;
+            padding: 10px 15px;
+            font-weight: normal;
+        }
+        .trending-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            overflow: hidden;
+            max-width: 300px;
+        }
+        .trending-text {
+            white-space: nowrap;
+        }
+        .date {
+            color: #ddd;
+            font-weight: bold;
+        }
+
+       /* Contenedor de las flechas (botones) */
+        .arrow-button {
+            background-color: #9d1746; 
+            display: flex; 
+            align-items: center;
+            justify-content: center; 
+            width: 30px;
+            height: 20px; 
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            position: absolute; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            border-radius: 0;
+            z-index: 1;
+        }
+
+        /* Flechas (iconos) */
+        .trending-arrows {
+            color: #fff;
+            font-size: 1.5em; 
+        }
+        .trending-content {
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+        }
+        .trending-text {
+            white-space: nowrap;
+            display: inline-block;
+            animation: scroll-left 10s linear infinite; 
+        }
+
+        /* Animación para el desplazamiento */
+        @keyframes scroll-left {
+            0% {
+                transform: translateX(100%); 
+            }
+            100% {
+                transform: translateX(-100%); 
+            }
+        }
+
+        /* Posición de las flechas */
+        .left-arrow {
+            left: 0; 
+        }
+        .right-arrow {
+            right: 0;
+        }
+
+        /* Contenedor Logo y navegador */
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: #fff;
+        }
+        .logo {
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 2rem;
+        }
+        .valle {
+            color: #9d1746; 
+        }
+        .news {
+            color: black;
+        }
+
+        /* Estilos para el buscador */
+        .search-container {
+            display: flex;
+            align-items: center;
+        }
+        .search-container input {
+            padding: 10px;
+            font-size: 1rem;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 200px;
+            transition: all 0.3s ease;
+        }
+        .search-container input:focus {
+            border-color: #9d1746;
+            outline: none;
+        }
+        .search-container button {
+            padding: 10px 15px;
+            background-color: #9d1746;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .search-container button i {
+            font-size: 1.2rem; 
+        }
+        .search-container button:hover {
+            background-color: #522231;
+        }
+
+        /* Estilo de menú */
+        .nav-bar {
+            background-color: #9d1746;
+            padding: 10px 0;
+            position: sticky;
+            justify-content: center;
+            align-items: center;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;            
+            gap: 20px;
+        }
+        nav ul li {
+            position: relative;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            padding: 10px 20px;
+            display: block;
+
+        }
+        nav ul li a:hover {
+            background-color:#522231; 
+        }
+        /* Submenú */
+        .submenu {
+            display: none; 
+            background-color:#522231; 
+            border: 1px solid #ddd;
+            position: absolute;
+            top: 100%;
+            text-align: left;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            padding: 5px 0;
+        }
+        .categories.active .submenu {
+        display: block;  
+        }
+        .submenu a {
+            color: white;
+            display: block;
+            text-decoration: none;
+            justify-content: center;
+            align-items: center;
+        }
+        .submenu a:hover {
+            color: #d32f2f;
+        }
+        nav ul li a:hover {
+            color: #d32f2f;
+        }
+        .nav-bar .categories {
+            position: relative;  
+        }
+        .social {
+            display: flex;
+            gap: 15px;
+            margin-left: auto;
+            flex-wrap: wrap;  
+            justify-content: flex-end;  
+        }
+        .social a {
+            text-decoration: none;
+            font-size: 20px;
+            color: white;
+            border: 2px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            aspect-ratio: 1;
+            width: 1vw;
+            max-width: 60px;
+            min-width: 40px;
+            height: auto;
+            transition: background-color 0.3s ease;
+        }
+        .social a:hover {
+            background-color: #d32f2f;
+        }
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 30px;
+            color: white;
+            padding: 10px;
+        }
+        .menu-toggle:hover {
+            color: #d32f2f;
+        }
+   /* Estilos Generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Contenido Principal */
+.noticias-entretenimiento {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.noticia {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.noticia img {
+    width: 300px;
+    height: 200px;
+    object-fit: cover; /* opcional para mantener el aspecto */
+}
+
+.noticia h2 {
+    margin: 15px;
+    font-size: 1.2em;
+}
+
+.noticia p {
+    padding: 0 15px;
+}
+
+.btn-leer-mas {
+    display: inline-block;
+    background-color:rgb(187, 20, 187);
+    color: white;
+    padding: 10px;
+    margin: 15px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.btn-leer-mas:hover {
+    background-color:darkmagenta;
+}
+
+/* Noticia Completa */
+.noticia-detalle {
+    max-width: 600px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.noticia-detalle img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.noticia-detalle h2 {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+/*Footer Menu*/
+.logo-footer {
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            position: relative;
+            font-size:small;
+        }
+        .footer-menu {
+            position: relative;
+            background: #522231;
+        }
+        .footer-menu .container {
+            padding: 15px 0;
+            border-top: 1px solid #522231;
+        }
+        .footer-menu .f-menu {
+            font-size: 0;
+            text-align: center;
+        }
+        .footer-menu .f-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            margin-right: 15px;
+            padding-right: 15px;
+            border-right: 1px solid #ffffff;
+        }
+        .footer-menu .f-menu a:hover {
+            color: #FF6F61;
+        }
+        .footer-menu .f-menu a:last-child {
+            margin-right: 0;
+            padding-right: 0;
+            border-right: none;
+        }
+        /*Copyright*/
+
+        .footer-bottom {
+            position: relative;
+            background: #9d1746;
+        }
+        .footer-bottom .copyright {
+            text-align: center;
+            color: white;
+            
+        }
+        .footer-bottom .copyright a {
+            color: white;
+            text-decoration: none;
+        }
+        .footer-bottom .copyright a:hover{
+            color: #FF6F61;
+        }
+/* Footer Columns */
+.footer-columns {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .footer-columns div {
+            flex: 1;
+            min-width: 200px;
+            color: #fff;
+        }
+        .footer-columns div h4 {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .categories, .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        /* Estilo de los botones (accordion) */
+        .accordion {
+            background-color: #9d1746;
+            color: white;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.1rem;
+            border: 2px solid white; 
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .accordion:hover {
+            background-color: #522231; 
+            color: #FF6F61; 
+        }
+
+        .accordion.active {
+            background-color: #522231; 
+            color: #FF6F61; 
+        }
+
+        /* Estilos para los enlaces rápidos */
+        .quick-links {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .quick-links li {
+            margin: 8px 0;
+        }
+        .quick-links a {
+            color: #fff;
+            text-decoration: none; 
+            font-size: 1em;
+            transition: color 0.3s ease;
+        }
+        .quick-links a:hover {
+            color: #FF6F61; 
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: space-around;
+            }
+            .trending-section {
+                flex-wrap: wrap;
+                text-align: center;
+            }
+            .contact-section {
+                flex-direction: column;
+            }
+            .footer-columns {
+                flex-direction: column;
+            }
+            .news-section {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /*Footer Menu*/
+        .logo-footer {
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            position: relative;
+            font-size:small;
+        }
+        .footer-menu {
+            position: relative;
+            background: #522231;
+        }
+        .footer-menu .container {
+            padding: 15px 0;
+            border-top: 1px solid #522231;
+        }
+        .footer-menu .f-menu {
+            font-size: 0;
+            text-align: center;
+        }
+        .footer-menu .f-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            margin-right: 15px;
+            padding-right: 15px;
+            border-right: 1px solid #ffffff;
+        }
+        .footer-menu .f-menu a:hover {
+            color: #FF6F61;
+        }
+        .footer-menu .f-menu a:last-child {
+            margin-right: 0;
+            padding-right: 0;
+            border-right: none;
+        }
+        /*Copyright*/
+
+        .footer-bottom {
+            position: relative;
+            background: #9d1746;
+        }
+        .footer-bottom .copyright {
+            text-align: center;
+            color: white;
+            
+        }
+        .footer-bottom .copyright a {
+            color: white;
+            text-decoration: none;
+        }
+        .footer-bottom .copyright a:hover{
+            color: #FF6F61;
+        }
+</style>
+<body>
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noticias de Entretenimiento</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+ 
+
+
+    <!-- Logo y navegador -->
+<div class="header-container">
+    <div class="logo">
+        <span class="valle">INFO</span><span class="news">SISTEMAS</span>
+    </div>
+    <div class="search-container">
+        <input type="text" placeholder="Buscar...">
+        <button><i class="fas fa-search"></i></button>
+    </div>
+</div>
+
+<!-- Navigation -->
+    <div class="nav-bar">
+        <nav>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i> 
+            </div>
+
+            <ul id="menu" class="menu">
+                <li><a href="./index.html">Inicio</a></li>
+                <li class="categories">
+                    <a href="#categories">Categorías</a>
+                    <div class="submenu">
+                        <a href="#">Deporte</a>
+                        <a href="#">Entretenimiento</a>
+                        <a href="#">Ciencia</a>
+                        <a href="#">Tecnología</a>  
+                    </div>
+                </li>
+                <li><a href="#">Noticias Locales</a></li>
+                <li><a href="#">Noticias Internacionales</a></li>
+                <li><a href="./contacto.html">Contacto</a></li>
+            </ul>
+            <div class="social"> 
+                <a href=""><i class="fab fa-twitter"></i></a>
+                <a href=""><i class="fab fa-facebook-f"></i></a>
+                <a href=""><i class="fab fa-linkedin-in"></i></a>
+                <a href=""><i class="fab fa-instagram"></i></a>
+                <a href=""><i class="fab fa-youtube"></i></a>
+            </div> 
+        </nav>
+    </div>
+
+    <h1> Noticias de Entretenimiento</h1>
+    <!-- Contenido Principal -->
+    <main>
+        <section class="noticias-entretenimiento">
+            <!-- Artículo 1 -->
+            <article class="noticia">
+                <img src="https://bloximages.newyork1.vip.townnews.com/elvocero.com/content/tncms/assets/v3/editorial/9/4a/94a66832-9ea4-11ef-ba5c-a74f710d7a58/672f6db985dce.image.png?resize=400%2C270" alt="" >
+                <h2>Juez rechaza la petición de Sean "Diddy" Combs de silenciar a posibles testigos y a sus abogados</h2>
+                <p>Un juez federal rechazó este viernes el intento de Sean “Diddy” Combs de silenciar a todos los testigos potenciales en su caso penal de tráfico sexual, diciendo que sus preocupaciones no pesan más que el derecho de una presunta víctima a la libertad de expresión.</p>
+                <a href="./NotEntretenimiento1.html" class="btn-leer-mas">Leer más</a>
+            </article>
+
+            <!-- Artículo 2 -->
+            <article class="noticia">
+                <img src="data:image/jpeg;base64,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" alt="" >
+                <h2>Ariana Grande dice que si no hubiera obtenido su papel en ‘Wicked’ ‘podría haber terminado en manicomio’</h2>
+                <p>Ariana Grande realmente quería interpretar a Glinda la Bruja Buena en Wicked. También habló de cómo se sintió cuando conoció por primera vez a su coprotagonista Cynthia Erivo. </p>
+                <a href="./NotEntretenimiento2.html" class="btn-leer-mas">Leer más</a>
+            </article>
+
+            <!-- Artículo 3 -->
+            <article class="noticia">
+                <img src="https://www.infobae.com/resizer/v2/4X7GA27M4QEDPUA6C2RBNI6NBA.jpg?auth=5d6dbba2a5d02a333d52d21d6859372da86f19f61f4c2b8bcae02cb15f1501fc&smart=true&width=992&height=661&quality=85" alt="" >
+                <h2>El rapero 6ix9ine llegó a un nuevo acuerdo judicial para finalizar su sentencia en prisión</h2>
+                <p>Un artista marcado por la polémica y sus múltiples conflictos legales, se enfrenta a una nueva condena​</p>
+                <a href="./NotEntretenimiento3.html" class="btn-leer-mas">Leer más</a>
+            </article>
+
+            <!-- Artículo 4 -->
+            <article class="noticia">
+                <img src="https://e.rpp-noticias.io/xlarge/2024/10/31/361436_1663493.webp" alt="" >
+                <h2>'Deadpool & Wolverine': tras el éxito en taquilla, ya está disponible en streaming</h2>
+                <p>Aquí te contamos todo lo que necesitas saber sobre el estreno de Deadpool & Wolverine en streaming. </p>
+                <a href="./NotEntretenimiento4.html" class="btn-leer-mas">Leer más</a>
+            </article>
+
+            <!-- Artículo 5 -->
+            <article class="noticia">
+                <img src="https://dukx4ewcvnyp6.cloudfront.net/wp-content/uploads/2024/11/WhatsApp-Image-2024-11-12-at-2.36.56-PM.webp" alt="" >
+                <h2>Polémica canción de Karol G, J Balvin, Maluma y otros que sexualiza a niñas de 14 años</h2>
+                <p>Desde defensores de los derechos humanos, periodistas y hasta el presidente de Colombia, Gustavo Petro, se unieron a los debates de la canción.</p>
+                <a href="./NotEntretenimiento5.html" class="btn-leer-mas">Leer más</a>
+            </article>
+
+            <!-- Artículo 6 -->
+            <article class="noticia">
+                <img src="data:image/jpeg;base64,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" alt="" >
+                <h2> Nominados a los Premios Grammy 2025: lista por categorías </h2>
+                <p> Los ganadores de esta edición se conocerán en el evento que se celebrará en Los Ángeles el 2 de febrero.</p>
+                <a href="./NotEntretenimiento6.html" class="btn-leer-mas">Leer más</a>
+            </article>
+
+            <!-- Artículo 7 -->
+            <article class="noticia">
+                <img src="https://pxcdn.reduno.com.bo/reduno/032024/1709566104290.webp?cw=800&ch=450&extw=jpg" alt="" >
+                <h2> Luis Miguel cancela su concierto en Santa Cruz, te contamos qué fue lo que pasó</h2>
+                <p>Fanáticos del 'Sol de México' esperaban con ansias la presentación del artista el 28 de este mes.</p>
+                <a href="./NotEntretenimiento7.html" class="btn-leer-mas">Leer más</a>
+            </article>
+
+             <!-- Artículo 8 -->
+             <article class="noticia">
+                <img src="data:image/jpeg;base64,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" alt="" >
+                <h2>Denzel Washington anuncia que estará en "Black Panther 3" y que será uno de sus últimos papeles antes de retirarse</h2>
+                <p>Durante una reciente entrevista con el programa “Today” de Australia, Washington habló sobre su carrera y sus proyectos futuros.</p>
+                <a href="./NotEntretenimiento8.html" class="btn-leer-mas">Leer más</a>
+            </article>
+
+          
+           
+        </section>
+    </main>
+<br>
+<br>
+<!-- Footer -->
+<footer class="footer" style="background: #9d1746;">
+    <div class="footer-columns container">
+        <div>
+            <h4 class="logo-footer">INFOSISTEMAS</h4>
+            <div class="social">
+                <a href=""><i class="fab fa-twitter"></i></a>
+                <a href=""><i class="fab fa-facebook-f"></i></a>
+                <a href=""><i class="fab fa-linkedin-in"></i></a>
+                <a href=""><i class="fab fa-instagram"></i></a>
+                <a href=""><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+        <div>
+            <h4>Categorías</h4>
+            <div class="categories">
+                <button class="accordion">Política</button>
+                <button class="accordion">Corporativo</button>
+                <a href="./PaginaPrincipalDeportes.html"></a><button class="accordion">Deportes</button>
+                <button class="accordion">Salud</button>
+                <a href="./Educacion.html"><button class="accordion">Educación</button></a>
+                <button class="accordion">Ciencia</button>
+                <button class="accordion">Tecnología</button>
+                <a href="./PaginaPrincipalEntretenimiento.html"></a><button class="accordion">Entretenimiento</button>
+            </div>            
+        </div>
+        <div>
+            <h4>Etiquetas</h4>
+            <div class="tags">
+                <button class="accordion">Politica</button>
+                <button class="accordion">Corporativo</button>
+                <a href="./PaginaPrincipalDeportes.html"></a><button class="accordion">Deportes</button>
+                <button class="accordion">Salud</button>
+                <a href="./Educacion.html">
+                    <button class="accordion">Educación</button>
+                </a>
+                <button class="accordion">Ciencia</button>
+                <button class="accordion">Tecnología</button>
+                <a href="./PaginaPrincipalEntretenimiento.html"></a><button class="accordion">Entretenimiento</button>
+            </div>
+        </div>
+        <div>
+            <div>
+                <h4>Enlaces rápidos</h4>
+                <ul class="quick-links">
+                    <li><a href="./Acerca de.html">Acerca de</a></li>                 
+                    <li><a href="./privacidadpolitica.html">Privacidad y política</a></li>
+                    <li><a href="./TerminosyCondiciones.html">Términos y condiciones</a></li>
+                </ul>
+            </div>        
+        </div>
+        </div>
+        <br>
+        <br>
+        <div class="footer-menu">
+            <div class="container">
+                <div class="f-menu">
+                    <a href="./Terminosdeuso.html">Términos de uso</a>
+                    <a href="./privacidadpolitica.html">Política de privacidad</a>
+                    <a href="./cookies.html">Cookies</a>
+                    <a href="./Accesibilidad.html">Ayuda de accesibilidad</a>
+                    <a href="./Publicidadnosotros.html">Publicidad con nosotros</a>
+                    <a href="./contacto.html">Contáctanos</a>
+                </div>
+            </div>
+        </div>
+</footer>
+        <!-- Copyright -->
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="copyright">
+                        <p>Copyright &copy; <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">INFOSISTEMAS</a>. Todos los derechos reservados</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</body>
+</html>

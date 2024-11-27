@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acerca de... </title>
+    <style>
+         /* Header Styles */
+         .header {
+            background-color: #9d1746;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .trending-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .trending-label {
+            background-color: #522231;
+            color: #fff;
+            padding: 10px 15px;
+            font-weight: bold;
+        }
+        .trending-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            overflow: hidden;
+            max-width: 300px;
+        }
+        .trending-text {
+            white-space: nowrap;
+        }
+        .date {
+            color: #ddd;
+            font-weight: bold;
+        }
+        /* Follow Section*/
+
+        .follow-us {
+        width: 200px;
+        margin: 0 auto;
+        text-align: center;
+        }
+        .follow-us h2 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        .social-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9em;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+        .social-button i {
+            margin-right: 8px;
+        }
+        .facebook { background-color: #3b5998; }
+        .twitter { background-color: #55acee; }
+        .linkedin { background-color: #0077b5; }
+        .instagram { background-color: #e4405f; }
+        .youtube { background-color: #cd201f; }
+        .vimeo { background-color: #1ab7ea; }
+
+         /* Contenedor Logo y navegador */
+         .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: #fff;
+        }
+        .logo {
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 2rem;
+        }
+        .valle {
+            color: #9d1746; 
+        }
+        .news {
+            color: black;
+        }
+        body{
+            font-family:Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+            font-size: 25px;
+        }
+        /* Estilos para el buscador */
+        .search-container {
+            display: flex;
+            align-items: center;
+        }
+        .search-container input {
+            padding: 10px;
+            font-size: 1rem;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 200px;
+            transition: all 0.3s ease;
+        }
+        .search-container input:focus {
+            border-color: #9d1746;
+            outline: none;
+        }
+        .search-container button {
+            padding: 10px 15px;
+            background-color: #9d1746;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .search-container button i {
+            font-size: 1.2rem; 
+        }
+        .search-container button:hover {
+            background-color: #522231;
+        }
+        /* Estilo de menú */
+        .nav-bar {
+            background-color: #9d1746;
+            width: 100%;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            gap: 20px;
+        }
+        nav ul li {
+            margin: 0;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            padding: 15px;
+            display: inline-block;
+        }
+        nav ul li a:hover {
+            color: #d32f2f;
+        }
+        .social {
+            display: flex;
+            gap: 15px;
+            margin-left: auto;
+            flex-wrap: wrap;  
+            justify-content: flex-end;  
+        }
+        .social a {
+            text-decoration: none;
+            font-size: 20px;
+            color: white;
+            border: 2px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            aspect-ratio: 1;
+            width: 1vw;
+            max-width: 60px;
+            min-width: 40px;
+            height: auto;
+            transition: background-color 0.3s ease;
+        }
+        /* News Section */
+        .container-news {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .top-articles {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: space-between;
+        }
+        .top-articles div {
+            width: 24%;
+        }
+        .top-articles img {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .main-content {
+            display: flex;
+            gap: 20px;
+        }
+        .carousel {
+            position: relative;
+            width: 100%;
+            height: 350px;
+            overflow: hidden;
+            border-radius: 5px;
+        }
+                /*Footer Menu*/
+                .footer-menu {
+            position: relative;
+            background: #522231;
+        }
+
+        .footer-menu .container {
+            padding: 15px 0;
+            border-top: 1px solid #522231;
+        }
+
+        .footer-menu .f-menu {
+            font-size: 0;
+            text-align: center;
+        }
+
+        .footer-menu .f-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            margin-right: 15px;
+            padding-right: 15px;
+            border-right: 1px solid #ffffff;
+        }
+
+        .footer-menu .f-menu a:hover {
+            color: #FF6F61;
+        }
+
+        .footer-menu .f-menu a:last-child {
+            margin-right: 0;
+            padding-right: 0;
+            border-right: none;
+        }
+        
+    </style>
+</head>
+<body>
+<!-- Logo y navegador -->
+<div class="header-container">
+    <div class="logo">
+        <span class="valle">INFO</span><span class="news">SISTEMAS</span>
+    </div>
+    <div class="search-container">
+        <input type="text" placeholder="Buscar...">
+        <button><i class="fas fa-search"></i></button>
+    </div>
+</div>
+
+<!-- Navigation -->
+<div class="nav-bar">
+    <nav>
+        <ul>
+            <li><a href="#">Inicio</a></li>
+            <li><a href="#">Categorías</a></li>
+            <li><a href="#">Noticias Locales</a></li>
+            <li><a href="#">Noticias Internacionales</a></li>
+            <li><a href="./contacto.html">Contacto</a></li>
+        </ul>
+        <div class="social"> 
+            <a href=""><i class="fab fa-twitter"></i></a>
+            <a href=""><i class="fab fa-facebook-f"></i></a>
+            <a href=""><i class="fab fa-linkedin-in"></i></a>
+            <a href=""><i class="fab fa-instagram"></i></a>
+            <a href=""><i class="fab fa-youtube"></i></a>
+        </div> 
+    </nav>
+</div>
+
+</header>
+  <h2> Ayuda de accesibilidad dentro de nuestro sitio web </h2>
+  <p> Nuestro sitio web de noticias está comprometido con la accesibilidad para todos los usuarios, independientemente de sus capacidades físicas o tecnológicas. Queremos garantizar que todas las personas puedan acceder y disfrutar de nuestros contenidos de manera fácil y eficiente. A continuación, te ofrecemos una guía sobre las herramientas de accesibilidad disponibles en nuestro sitio y algunos consejos para mejorar tu experiencia de navegación.</p>
+   <ol>
+    <li> <strong> Navegación con Teclado </strong></li>
+    <p> Puedes navegar por nuestro sitio utilizando solo el teclado. Usa la tecla Tab para moverte entre los enlaces, botones y campos interactivos. </p>
+    <p> Utiliza Shift + Tab para retroceder en la navegación. </p>
+    <p> Pulsa Enter para seleccionar un elemento destacado, y Esc para cerrar menús o ventanas emergentes.</p>
+    <li> <strong> Compatibilidad con Lectores de Pantalla</strong></li>
+    <p> Nuestro sitio está optimizado para trabajar con lectores de pantalla como NVDA, JAWS y VoiceOver. Esto incluye descripciones claras para imágenes, encabezados correctamente estructurados y etiquetas para botones y enlaces.</p>
+    <p> Las etiquetas de las imágenes y los textos alternativos ayudan a los usuarios con discapacidad visual a comprender el contenido multimedia. </p>
+    <li> <strong> Modo de Alto Contraste </strong></li>
+    <p> Para mejorar la legibilidad, puedes activar el Modo de Alto Contraste. Esto es útil para usuarios con baja visión o sensibilidad a los colores. Encuentra esta opción en la esquina superior derecha de nuestra página o en la configuración de accesibilidad de tu navegador.</p>
+    <li> <strong> Tamaño de Fuente Ajustable </strong></li>
+    <p> Nuestro sitio permite ajustar el tamaño del texto para mejorar la lectura. Usa los controles de zoom de tu navegador (Ctrl + para aumentar, Ctrl - para disminuir) o accede a nuestras configuraciones para establecer un tamaño de fuente predeterminado.</p>
+    <li> <strong> Subtítulos y Transcripciones </strong></li>
+    <p> Los videos incluidos en nuestras noticias vienen con subtítulos para aquellos con dificultades auditivas. Además, ofrecemos transcripciones completas para contenido multimedia, asegurando que no te pierdas ningún detalle importante.</p>
+    <li> <strong> Atajos de Teclado </strong></li>
+    <p> Ofrecemos atajos rápidos para una navegación eficiente: </p>
+    <ul>
+        <li> <strong>S: </strong> Ir al contenido principal</li>
+        <li> <strong>H: </strong> Ir al encabezado de la página</li>
+        <li> <strong>L: </strong> Lista de artículos</li>
+        <li> <strong>0: </strong> Acceder a la página de ayuda</li>
+
+    </ul>
+    <li> <strong> Compatibilidad Móvil </strong></li>
+    <p> Nuestro sitio es responsivo, lo que significa que se adapta automáticamente a dispositivos móviles y tabletas, garantizando una experiencia fluida y accesible en todos los tamaños de pantalla.</p>
+    <li> <strong> Soporte Técnico </strong></li>
+    <p> Si encuentras alguna dificultad para acceder al contenido o si necesitas soporte adicional, no dudes en contactarnos a través de nuestro formulario de Atención al Cliente o mediante un correo electrónico. Estamos aquí para ayudarte y mejorar continuamente nuestro sitio en función de tus comentarios.</p>
+    <li> <strong> Consejos Adicionales </strong></li>
+    <p> Recomendamos usar navegadores actualizados para garantizar la mejor experiencia de accesibilidad. </p>
+    <p> Puedes activar opciones de accesibilidad adicionales en la configuración de tu sistema operativo, como la ampliación de pantalla, el uso de colores invertidos, y más. </p>
+   
+</ol>
+<p> Nos esforzamos por cumplir con las pautas de accesibilidad web, incluyendo las Pautas de Accesibilidad al Contenido en la Web (WCAG 2.1), para ofrecer una experiencia inclusiva para todos. Agradecemos tus sugerencias y observaciones para seguir mejorando. ¡Gracias por visitar InfoSistemas!</p>
+<footer class="footer" style="background: #9d1746;">
+    <div class="footer-columns container">
+        <a href="./pagina noticias.html"> Volver a la pagina principal </a>
+            <div class="footer-menu">
+                <div class="container">
+                    <div class="f-menu">
+                    <a href="./Terminosdeuso.html">Términos de uso</a>
+                    <a href="./privacidadpolitica.html">Política de privacidad</a>
+                    <a href="./cookies.html">Cookies</a>
+                    <a href="./Accesibilidad.html">Ayuda de accesibilidad</a>
+                    <a href="./Publicidadnosotros.html">Publicidad con nosotros</a>
+                    <a href="./contacto.html">Contáctanos</a>
+                </div>
+                </div>
+            </div>
+    </footer>
+</body>
+</html>

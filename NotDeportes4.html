@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Not 1</title>
+</head>
+<style>
+     /* Header Styles */
+     .header {
+            background-color: #9d1746;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .trending-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .trending-label {
+            background-color: #522231;
+            color: #fff;
+            padding: 10px 15px;
+            font-weight: normal;
+        }
+        .trending-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            overflow: hidden;
+            max-width: 300px;
+        }
+        .trending-text {
+            white-space: nowrap;
+        }
+        .date {
+            color: #ddd;
+            font-weight: bold;
+        }
+
+       /* Contenedor de las flechas (botones) */
+        .arrow-button {
+            background-color: #9d1746; 
+            display: flex; 
+            align-items: center;
+            justify-content: center; 
+            width: 30px;
+            height: 20px; 
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            position: absolute; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            border-radius: 0;
+            z-index: 1;
+        }
+
+        /* Flechas (iconos) */
+        .trending-arrows {
+            color: #fff;
+            font-size: 1.5em; 
+        }
+        .trending-content {
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+        }
+        .trending-text {
+            white-space: nowrap;
+            display: inline-block;
+            animation: scroll-left 10s linear infinite; 
+        }
+
+        /* Animación para el desplazamiento */
+        @keyframes scroll-left {
+            0% {
+                transform: translateX(100%); 
+            }
+            100% {
+                transform: translateX(-100%); 
+            }
+        }
+
+        /* Posición de las flechas */
+        .left-arrow {
+            left: 0; 
+        }
+        .right-arrow {
+            right: 0;
+        }
+
+        /* Contenedor Logo y navegador */
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: #fff;
+        }
+        .logo {
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 2rem;
+        }
+        .valle {
+            color: #9d1746; 
+        }
+        .news {
+            color: black;
+        }
+
+        /* Estilos para el buscador */
+        .search-container {
+            display: flex;
+            align-items: center;
+        }
+        .search-container input {
+            padding: 10px;
+            font-size: 1rem;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 200px;
+            transition: all 0.3s ease;
+        }
+        .search-container input:focus {
+            border-color: #9d1746;
+            outline: none;
+        }
+        .search-container button {
+            padding: 10px 15px;
+            background-color: #9d1746;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .search-container button i {
+            font-size: 1.2rem; 
+        }
+        .search-container button:hover {
+            background-color: #522231;
+        }
+
+        /* Estilo de menú */
+        .nav-bar {
+            background-color: #9d1746;
+            padding: 10px 0;
+            position: sticky;
+            justify-content: center;
+            align-items: center;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;            
+            gap: 20px;
+        }
+        nav ul li {
+            position: relative;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            padding: 10px 20px;
+            display: block;
+
+        }
+        nav ul li a:hover {
+            background-color:#522231; 
+        }
+        /* Submenú */
+        .submenu {
+            display: none; 
+            background-color:#522231; 
+            border: 1px solid #ddd;
+            position: absolute;
+            top: 100%;
+            text-align: left;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            padding: 5px 0;
+        }
+        .categories.active .submenu {
+        display: block;  
+        }
+        .submenu a {
+            color: white;
+            display: block;
+            text-decoration: none;
+            justify-content: center;
+            align-items: center;
+        }
+        .submenu a:hover {
+            color: #d32f2f;
+        }
+        nav ul li a:hover {
+            color: #d32f2f;
+        }
+        .nav-bar .categories {
+            position: relative;  
+        }
+        .social {
+            display: flex;
+            gap: 15px;
+            margin-left: auto;
+            flex-wrap: wrap;  
+            justify-content: flex-end;  
+        }
+        .social a {
+            text-decoration: none;
+            font-size: 20px;
+            color: white;
+            border: 2px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            aspect-ratio: 1;
+            width: 1vw;
+            max-width: 60px;
+            min-width: 40px;
+            height: auto;
+            transition: background-color 0.3s ease;
+        }
+        .social a:hover {
+            background-color: #d32f2f;
+        }
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 30px;
+            color: white;
+            padding: 10px;
+        }
+        .menu-toggle:hover {
+            color: #d32f2f;
+        }
+   /* Estilos Generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 20px;
+    font-size: 35px;
+}
+h1{
+    text-align: center;
+}  
+/* Contenido Principal */
+.noticias-deportes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.noticia {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.noticia img {
+    width: 300px;
+    height: 200px;
+    object-fit: cover; /* opcional para mantener el aspecto */
+    text-align: center;
+}
+
+.noticia h2 {
+    margin: 15px;
+    font-size: 1.2em;
+    
+}
+
+.noticia p {
+    padding: 0 15px;
+    
+}
+
+.btn-leer-mas {
+    display: inline-block;
+    background-color:rgb(187, 20, 187);
+    color: white;
+    padding: 10px;
+    margin: 15px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.btn-leer-mas:hover {
+    background-color:darkmagenta;
+}
+
+/* Noticia Completa */
+.noticia-detalle {
+    max-width: 600px;
+    margin: 20px auto;
+    
+}
+
+.noticia-detalle img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+    
+}
+
+.noticia-detalle h2 {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+/*Footer Menu*/
+.logo-footer {
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            position: relative;
+            font-size:small;
+        }
+        .footer-menu {
+            position: relative;
+            background: #522231;
+        }
+        .footer-menu .container {
+            padding: 15px 0;
+            border-top: 1px solid #522231;
+        }
+        .footer-menu .f-menu {
+            font-size: 0;
+            text-align: center;
+        }
+        .footer-menu .f-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            margin-right: 15px;
+            padding-right: 15px;
+            border-right: 1px solid #ffffff;
+        }
+        .footer-menu .f-menu a:hover {
+            color: #FF6F61;
+        }
+        .footer-menu .f-menu a:last-child {
+            margin-right: 0;
+            padding-right: 0;
+            border-right: none;
+        }
+        /*Copyright*/
+
+        .footer-bottom {
+            position: relative;
+            background: #9d1746;
+        }
+        .footer-bottom .copyright {
+            text-align: center;
+            color: white;
+            
+        }
+        .footer-bottom .copyright a {
+            color: white;
+            text-decoration: none;
+        }
+        .footer-bottom .copyright a:hover{
+            color: #FF6F61;
+        }
+/* Footer Columns */
+.footer-columns {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .footer-columns div {
+            flex: 1;
+            min-width: 200px;
+            color: #fff;
+        }
+        .footer-columns div h4 {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .categories, .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        /* Estilo de los botones (accordion) */
+        .accordion {
+            background-color: #9d1746;
+            color: white;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.1rem;
+            border: 2px solid white; 
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .accordion:hover {
+            background-color: #522231; 
+            color: #FF6F61; 
+        }
+
+        .accordion.active {
+            background-color: #522231; 
+            color: #FF6F61; 
+        }
+
+        /* Estilos para los enlaces rápidos */
+        .quick-links {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .quick-links li {
+            margin: 8px 0;
+        }
+        .quick-links a {
+            color: #fff;
+            text-decoration: none; 
+            font-size: 1em;
+            transition: color 0.3s ease;
+        }
+        .quick-links a:hover {
+            color: #FF6F61; 
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: space-around;
+            }
+            .trending-section {
+                flex-wrap: wrap;
+                text-align: center;
+            }
+            .contact-section {
+                flex-direction: column;
+            }
+            .footer-columns {
+                flex-direction: column;
+            }
+            .news-section {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /*Footer Menu*/
+        .logo-footer {
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            position: relative;
+            font-size:small;
+        }
+        .footer-menu {
+            position: relative;
+            background: #522231;
+        }
+        .footer-menu .container {
+            padding: 15px 0;
+            border-top: 1px solid #522231;
+        }
+        .footer-menu .f-menu {
+            font-size: 0;
+            text-align: center;
+        }
+        .footer-menu .f-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            margin-right: 15px;
+            padding-right: 15px;
+            border-right: 1px solid #ffffff;
+        }
+        .footer-menu .f-menu a:hover {
+            color: #FF6F61;
+        }
+        .footer-menu .f-menu a:last-child {
+            margin-right: 0;
+            padding-right: 0;
+            border-right: none;
+        }
+        /*Copyright*/
+
+        .footer-bottom {
+            position: relative;
+            background: #9d1746;
+        }
+        .footer-bottom .copyright {
+            text-align: center;
+            color: white;
+            
+        }
+        .footer-bottom .copyright a {
+            color: white;
+            text-decoration: none;
+        }
+        .footer-bottom .copyright a:hover{
+            color: #FF6F61;
+        }
+        .center-img {
+            display: block;
+            margin: auto;
+            width: 900px;
+            height: 1000px;
+        }
+        .tarjeta img{
+        float: right;
+        width: 800px;
+        height: 600px;
+        margin-right: 20px;
+        }
+        .tarjeta1 img{
+        float: left;
+        width: 700px;
+        height: 400px;
+        margin-right: 20px;
+        }
+</style>
+<body>
+     <!-- Logo y navegador -->
+<div class="header-container">
+    <div class="logo">
+        <span class="valle">INFO</span><span class="news">SISTEMAS</span>
+    </div>
+    <div class="search-container">
+        <input type="text" placeholder="Buscar...">
+        <button><i class="fas fa-search"></i></button>
+    </div>
+</div>
+
+<!-- Navigation -->
+    <div class="nav-bar">
+        <nav>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i> 
+            </div>
+
+            <ul id="menu" class="menu">
+                <li><a href="./index.html">Inicio</a></li>
+                <li class="categories">
+                    <a href="#categorias">Categorías</a>
+                    <div class="submenu">
+                        <a href="#">Deporte</a>
+                        <a href="#">Entretenimiento</a>
+                        <a href="#">Ciencia</a>
+                        <a href="#">Tecnología</a>  
+                    </div>
+                </li>
+                <li><a href="#">Noticias Locales</a></li>
+                <li><a href="#">Noticias Internacionales</a></li>
+                <li><a href="./contacto.html">Contacto</a></li>
+            </ul>
+            <div class="social"> 
+                <a href=""><i class="fab fa-twitter"></i></a>
+                <a href=""><i class="fab fa-facebook-f"></i></a>
+                <a href=""><i class="fab fa-linkedin-in"></i></a>
+                <a href=""><i class="fab fa-instagram"></i></a>
+                <a href=""><i class="fab fa-youtube"></i></a>
+            </div> 
+        </nav>
+    </div>
+    <h1> ¿Sergio Ramos al Real Madrid?: la circunstancia que lo hace posible mientras las redes ya especulan con ello </h1>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRo7iQ9qD0x-NxNtggKf__CUlyFtJhr7F2-SA&s" alt="Desc" class="center-img"> 
+    <p> La grave lesión de rodilla de Eder Militao deja temblando a la defensa del Real Madrid y podría obligar al conjunto blanco a tener que acudir al mercado de invierno por primera vez en cinco años o incluso pensar en fichar fuera del mercado. Una circunstancia que abre la posibilidad a un posible fichaje de Sergio Ramos, aunque la misma, no parece factible.​</p>
+    <div class="tarjeta"> 
+        <img src="https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AA1tPetV.img?w=768&h=432&m=6" alt="">
+    <p> El defensa brasileño sufre una rotura completa del ligamento cruzado anterior, con afectación de ambos meniscos. Militao estará nueve meses de baja y, por tanto, se pierde toda la temporada. Esto hace que se abran dos posibilidades para poder fichar: un agente libre ahora, o esperar a enero y, mientras tanto, tirar de cantera. 
+    </p>
+<p> Todo ello ha hecho que se comience a barajar la posibilidad de que vuelva Sergio Ramos, ya que este no tiene equipo en la actualidad. Sin embargo, esta opción parece no convencer a la cúpula del Real Madrid, teniendo en cuenta además que la relación entre el club y el jugador no terminó de la mejor manera. </p>
+    <p> Aunque Guti dijo tras el partido de este sábado en el Bernabéu que para él, teniendo en cuenta la situación de urgencia, no era una mala opción.  "Te toca salir al mercado... y Sergio Ramos está sin equipo. Lateral derecho y central, a coste cero. Yo lo veo claro. Si quieres ir al mercado y fichar a un central para los próximos diez años, pagando mucho dinero, vale. Pero para acabar trayendo a un parche, alguien que no sabes cómo va a salir, yo prefiero a Sergio Ramos. Un hombre que ha estado en la casa, que el año pasado estuvo en activo, que se sigue cuidando y que puede cumplir estos seis meses", dijo su excompañero en DAZN. </p>
+    <div class="tarjeta1"> 
+        <img src="data:image/jpeg;base64,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" alt="">
+    <p> Asimismo, los internautas de las redes sociales también comenzaron a especular con dicha posibilidad, especialmente después de que el propio jugador publicase una foto junto a Militao. "Fuerza, Mili. Te sabes el camino de vuelta, lo recorriste una vez y lo vas a volver a hacer", escribió en el post.</p>
+</div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+        <!-- Footer -->
+<footer class="footer" style="background: #9d1746;">
+    <div class="footer-columns container">
+        <div>
+            <h4 class="logo-footer">INFOSISTEMAS</h4>
+            <div class="social">
+                <a href=""><i class="fab fa-twitter"></i></a>
+                <a href=""><i class="fab fa-facebook-f"></i></a>
+                <a href=""><i class="fab fa-linkedin-in"></i></a>
+                <a href=""><i class="fab fa-instagram"></i></a>
+                <a href=""><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+        <div>
+            <h4>Categorías</h4>
+            <section id="categorias"></section>
+            <div class="categories">
+                <button class="accordion">Política</button>
+                <button class="accordion">Corporativo</button>
+                <a href="./PaginaPrincipalDeportes.html"></a><button class="accordion">Deportes</button>
+                <button class="accordion">Salud</button>
+                <a href="./Educacion.html"><button class="accordion">Educación</button></a>
+                <button class="accordion">Ciencia</button>
+                <button class="accordion">Tecnología</button>
+                <a href="./PaginaPrincipalEntretenimiento.html"></a><button class="accordion">Entretenimiento</button>
+            </div>            
+        </div>
+        <div>
+            <h4>Etiquetas</h4>
+            <div class="tags">
+                <button class="accordion">Politica</button>
+                <button class="accordion">Corporativo</button>
+                <a href="./PaginaPrincipalDeportes.html"></a><button class="accordion">Deportes</button>
+                <button class="accordion">Salud</button>
+                <a href="./Educacion.html">
+                    <button class="accordion">Educación</button>
+                </a>
+                <button class="accordion">Ciencia</button>
+                <button class="accordion">Tecnología</button>
+                <a href="./PaginaPrincipalEntretenimiento.html"></a><button class="accordion">Entretenimiento</button>
+            </div>
+        </div>
+        <div>
+            <div>
+                <h4>Enlaces rápidos</h4>
+                <ul class="quick-links">
+                    <li><a href="./Acerca de.html">Acerca de</a></li>                 
+                    <li><a href="./privacidadpolitica.html">Privacidad y política</a></li>
+                    <li><a href="./TerminosyCondiciones.html">Términos y condiciones</a></li>
+                </ul>
+            </div>
+            
+        </div>
+        
+        </div>
+        <br>
+        <br>
+        <div class="footer-menu">
+            <div class="container">
+                <div class="f-menu">
+                    <a href="./Terminosdeuso.html">Términos de uso</a>
+                    <a href="./privacidadpolitica.html">Política de privacidad</a>
+                    <a href="./cookies.html">Cookies</a>
+                    <a href="./Accesibilidad.html">Ayuda de accesibilidad</a>
+                    <a href="./Publicidadnosotros.html">Publicidad con nosotros</a>
+                    <a href="./contacto.html">Contáctanos</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+        <!-- Copyright -->
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="copyright">
+                        <p>Copyright &copy; <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">INFOSISTEMAS</a>. Todos los derechos reservados</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+</html>

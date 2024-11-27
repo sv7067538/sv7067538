@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacidad y Politica</title>
+</head>
+<style>
+  /* Header Styles */
+  .header {
+            background-color: #9d1746;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .trending-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .trending-label {
+            background-color: #522231;
+            color: #fff;
+            padding: 10px 15px;
+            font-weight: bold;
+        }
+        .trending-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            overflow: hidden;
+            max-width: 300px;
+        }
+        .trending-text {
+            white-space: nowrap;
+        }
+        .date {
+            color: #ddd;
+            font-weight: bold;
+        }
+         /* Contenedor Logo y navegador */
+         .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: #fff;
+        }
+        .logo {
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 2rem;
+        }
+        .valle {
+            color: #9d1746; 
+        }
+        .news {
+            color: black;
+        }
+        body{
+            font-family:Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+            font-size: 25px;
+        }
+        /* Estilos para el buscador */
+        .search-container {
+            display: flex;
+            align-items: center;
+        }
+        .search-container input {
+            padding: 10px;
+            font-size: 1rem;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 200px;
+            transition: all 0.3s ease;
+        }
+        .search-container input:focus {
+            border-color: #9d1746;
+            outline: none;
+        }
+        .search-container button {
+            padding: 10px 15px;
+            background-color: #9d1746;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .search-container button i {
+            font-size: 1.2rem; 
+        }
+        .search-container button:hover {
+            background-color: #522231;
+        }
+        /* Estilo de menú */
+        .nav-bar {
+            background-color: #9d1746;
+            width: 100%;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            gap: 20px;
+        }
+        nav ul li {
+            margin: 0;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            padding: 15px;
+            display: inline-block;
+        }
+        nav ul li a:hover {
+            color: #d32f2f;
+        }
+        .social {
+            display: flex;
+            gap: 15px;
+            margin-left: auto;
+            flex-wrap: wrap;  
+            justify-content: flex-end;  
+        }
+        .social a {
+            text-decoration: none;
+            font-size: 20px;
+            color: white;
+            border: 2px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            aspect-ratio: 1;
+            width: 1vw;
+            max-width: 60px;
+            min-width: 40px;
+            height: auto;
+            transition: background-color 0.3s ease;
+        }
+        /* News Section */
+        .container-news {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .top-articles {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: space-between;
+        }
+        .top-articles div {
+            width: 24%;
+        }
+        .top-articles img {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .main-content {
+            display: flex;
+            gap: 20px;
+        }
+        .carousel {
+            position: relative;
+            width: 100%;
+            height: 350px;
+            overflow: hidden;
+            border-radius: 5px;
+        }
+                /*Footer Menu*/
+                .footer-menu {
+            position: relative;
+            background: #522231;
+        }
+
+        .footer-menu .container {
+            padding: 15px 0;
+            border-top: 1px solid #522231;
+        }
+
+        .footer-menu .f-menu {
+            font-size: 0;
+            text-align: center;
+        }
+
+        .footer-menu .f-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            margin-right: 15px;
+            padding-right: 15px;
+            border-right: 1px solid #ffffff;
+        }
+
+        .footer-menu .f-menu a:hover {
+            color: #FF6F61;
+        }
+
+        .footer-menu .f-menu a:last-child {
+            margin-right: 0;
+            padding-right: 0;
+            border-right: none;
+        }
+        
+    
+</style>
+<body> 
+    <!-- Logo y navegador -->
+<div class="header-container">
+    <div class="logo">
+        <span class="valle">INFO</span><span class="news">SISTEMAS</span>
+    </div>
+    <div class="search-container">
+        <input type="text" placeholder="Buscar...">
+        <button><i class="fas fa-search"></i></button>
+    </div>
+</div>
+
+<!-- Navigation -->
+<div class="nav-bar">
+    <nav>
+        <ul>
+            <li><a href="#">Inicio</a></li>
+            <li><a href="#">Categorías</a></li>
+            <li><a href="#">Noticias Locales</a></li>
+            <li><a href="#">Noticias Internacionales</a></li>
+            <li><a href="./contacto.html">Contacto</a></li>
+        </ul>
+        <div class="social"> 
+            <a href=""><i class="fab fa-twitter"></i></a>
+            <a href=""><i class="fab fa-facebook-f"></i></a>
+            <a href=""><i class="fab fa-linkedin-in"></i></a>
+            <a href=""><i class="fab fa-instagram"></i></a>
+            <a href=""><i class="fab fa-youtube"></i></a>
+        </div> 
+    </nav>
+</div> 
+<h2> Publicidad con nosotros: Amplía tu Alcance en Nuestro Sitio Web de Noticias </h2>
+<p> ¿Buscas maximizar la visibilidad de tu marca y conectar con una audiencia diversa y comprometida? Nuestro sitio web de noticias es el lugar ideal para impulsar tu estrategia publicitaria. Con miles de visitantes diarios interesados en noticias actualizadas, análisis profundos y contenido de calidad, te ofrecemos una plataforma eficaz para llegar a tus clientes potenciales.</p>
+<h2> ¿Por Qué Publicitar con Nosotros? </h2>
+<ol> 
+    <li><strong> Audiencia Amplia y Segmentada </strong> </li>
+    <p> Nuestra comunidad abarca desde profesionales y estudiantes hasta entusiastas de la actualidad, lo que te brinda acceso a una audiencia activa y diversa.</p>
+    <p> Contamos con herramientas avanzadas de segmentación que permiten orientar tus anuncios a públicos específicos basados en intereses, ubicación geográfica, y más.</p>
+    <li> <strong> Visibilidad y Alcance</strong></li>
+    <p> Nuestro sitio recibe un volumen elevado de tráfico, asegurando que tu marca gane la exposición que necesita.</p>
+    <p> Al anunciarte con nosotros, tendrás la oportunidad de posicionar tu negocio frente a lectores interesados y comprometidos con temas de actualidad.</p>
+    <li> <strong> Formatos Publicitarios Flexibles </strong></li>
+    <p>Ofrecemos una variedad de opciones publicitarias adaptadas a tus necesidades: </p>
+    <ul>
+        <li> <strong>Banners Display: </strong> Ubicados estratégicamente en las secciones más vistas, como la página de inicio y los artículos destacados.</li>
+        <li> <strong>Anuncios Nativos: </strong> Integrados de manera natural en nuestro contenido para garantizar una experiencia publicitaria menos intrusiva y más efectiva.</li>
+        <li> <strong>Video Ads: </strong> Capta la atención con anuncios en formato de video que se reproducen antes o durante nuestros videos de noticias.</li>
+        <li> <strong> Contenido Patrocinado:</strong> Publica artículos o reportajes patrocinados que destacan tu marca dentro de nuestro entorno editorial.</li>
+    </ul>
+    <li> <strong> Reportes y Análisis en Tiempo Real </strong></li>
+    <p> Accede a métricas detalladas para medir el rendimiento de tus campañas. Te proporcionamos informes en tiempo real sobre impresiones, clics, tasas de conversión y más, permitiéndote ajustar tu estrategia en función de los resultados.</p>
+    <li> <strong> Soluciones Personalizadas </strong></li>
+    <p> Nuestro equipo de expertos en publicidad está listo para trabajar contigo y diseñar campañas personalizadas que se alineen con tus objetivos comerciales. Desde el diseño creativo hasta la implementación y optimización, estamos aquí para ayudarte a obtener el máximo retorno de tu inversión.</p>
+</ol>
+<h2> Beneficios Adicionales </h2>
+<ul> 
+    <li> <strong>Alta Credibilidad: </strong> Asociar tu marca con un medio de noticias confiable aumenta la confianza de los consumidores en tus productos o servicios.</li>
+    <li> <strong>Opciones de Retargeting:</strong> Llegar nuevamente a usuarios que han mostrado interés previo en tu marca, aumentando la posibilidad de conversión.</li>
+    <li> <strong>Compatibilidad Móvil: </strong> Nuestra plataforma es completamente optimizada para dispositivos móviles, asegurando que tus anuncios se vean impecables en cualquier pantalla.</li>
+</ul>
+<h2> Como comenzar </h2>
+<p> Publicitar con nosotros es fácil y rápido: </p>
+<ol>
+    <li> <strong>Contáctanos:</strong> Completa nuestro Formulario de Publicidad en línea o envía un correo para obtener una consulta gratuita.</li>
+    <li> <strong>Planificación de la Campaña:</strong>  Te ayudaremos a seleccionar los formatos y estrategias que mejor se adapten a tus objetivos.</li>
+    <li> <strong>Lanzamiento y Optimización:</strong> Una vez aprobada tu campaña, la pondremos en marcha y realizaremos ajustes constantes para maximizar su impacto.</li>
+</ol>
+<p> <strong> ¡Únete a nosotros y lleva tu publicidad al siguiente nivel! </strong></p>
+<footer class="footer" style="background: #9d1746;">
+    <div class="footer-columns container">
+        <a href="./pagina noticias.html"> Volver a la pagina principal </a>
+            <div class="footer-menu">
+                <div class="container">
+                    <div class="f-menu">
+                        <a href="./Terminosdeuso.html">Términos de uso</a>
+                        <a href="./privacidadpolitica.html">Política de privacidad</a>
+                        <a href="./cookies.html">Cookies</a>
+                        <a href="./Accesibilidad.html">Ayuda de accesibilidad</a>
+                        <a href="./Publicidadnosotros.html">Publicidad con nosotros</a>
+                        <a href="./contacto.html">Contáctanos</a>
+                    </div>
+                </div>
+            </div>
+    </footer>
+</body>
+</html>
+</body>
+</html>

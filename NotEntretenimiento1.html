@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Not 1</title>
+</head>
+<style>
+     /* Header Styles */
+     .header {
+            background-color: #9d1746;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .trending-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .trending-label {
+            background-color: #522231;
+            color: #fff;
+            padding: 10px 15px;
+            font-weight: normal;
+        }
+        .trending-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            overflow: hidden;
+            max-width: 300px;
+        }
+        .trending-text {
+            white-space: nowrap;
+        }
+        .date {
+            color: #ddd;
+            font-weight: bold;
+        }
+
+       /* Contenedor de las flechas (botones) */
+        .arrow-button {
+            background-color: #9d1746; 
+            display: flex; 
+            align-items: center;
+            justify-content: center; 
+            width: 30px;
+            height: 20px; 
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            position: absolute; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            border-radius: 0;
+            z-index: 1;
+        }
+
+        /* Flechas (iconos) */
+        .trending-arrows {
+            color: #fff;
+            font-size: 1.5em; 
+        }
+        .trending-content {
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+        }
+        .trending-text {
+            white-space: nowrap;
+            display: inline-block;
+            animation: scroll-left 10s linear infinite; 
+        }
+
+        /* Animación para el desplazamiento */
+        @keyframes scroll-left {
+            0% {
+                transform: translateX(100%); 
+            }
+            100% {
+                transform: translateX(-100%); 
+            }
+        }
+
+        /* Posición de las flechas */
+        .left-arrow {
+            left: 0; 
+        }
+        .right-arrow {
+            right: 0;
+        }
+
+        /* Contenedor Logo y navegador */
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: #fff;
+        }
+        .logo {
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 2rem;
+        }
+        .valle {
+            color: #9d1746; 
+        }
+        .news {
+            color: black;
+        }
+
+        /* Estilos para el buscador */
+        .search-container {
+            display: flex;
+            align-items: center;
+        }
+        .search-container input {
+            padding: 10px;
+            font-size: 1rem;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 200px;
+            transition: all 0.3s ease;
+        }
+        .search-container input:focus {
+            border-color: #9d1746;
+            outline: none;
+        }
+        .search-container button {
+            padding: 10px 15px;
+            background-color: #9d1746;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .search-container button i {
+            font-size: 1.2rem; 
+        }
+        .search-container button:hover {
+            background-color: #522231;
+        }
+
+        /* Estilo de menú */
+        .nav-bar {
+            background-color: #9d1746;
+            padding: 10px 0;
+            position: sticky;
+            justify-content: center;
+            align-items: center;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;            
+            gap: 20px;
+        }
+        nav ul li {
+            position: relative;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            padding: 10px 20px;
+            display: block;
+
+        }
+        nav ul li a:hover {
+            background-color:#522231; 
+        }
+        /* Submenú */
+        .submenu {
+            display: none; 
+            background-color:#522231; 
+            border: 1px solid #ddd;
+            position: absolute;
+            top: 100%;
+            text-align: left;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            padding: 5px 0;
+        }
+        .categories.active .submenu {
+        display: block;  
+        }
+        .submenu a {
+            color: white;
+            display: block;
+            text-decoration: none;
+            justify-content: center;
+            align-items: center;
+        }
+        .submenu a:hover {
+            color: #d32f2f;
+        }
+        nav ul li a:hover {
+            color: #d32f2f;
+        }
+        .nav-bar .categories {
+            position: relative;  
+        }
+        .social {
+            display: flex;
+            gap: 15px;
+            margin-left: auto;
+            flex-wrap: wrap;  
+            justify-content: flex-end;  
+        }
+        .social a {
+            text-decoration: none;
+            font-size: 20px;
+            color: white;
+            border: 2px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            aspect-ratio: 1;
+            width: 1vw;
+            max-width: 60px;
+            min-width: 40px;
+            height: auto;
+            transition: background-color 0.3s ease;
+        }
+        .social a:hover {
+            background-color: #d32f2f;
+        }
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 30px;
+            color: white;
+            padding: 10px;
+        }
+        .menu-toggle:hover {
+            color: #d32f2f;
+        }
+   /* Estilos Generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 20px;
+    font-size: 40px;
+}
+h1{
+    text-align: center;
+}  
+/* Contenido Principal */
+.noticias-deportes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.noticia {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.noticia img {
+    width: 300px;
+    height: 200px;
+    object-fit: cover; /* opcional para mantener el aspecto */
+    text-align: center;
+}
+
+.noticia h2 {
+    margin: 15px;
+    font-size: 1.2em;
+    
+}
+
+.noticia p {
+    padding: 0 15px;
+    
+}
+
+.btn-leer-mas {
+    display: inline-block;
+    background-color:rgb(187, 20, 187);
+    color: white;
+    padding: 10px;
+    margin: 15px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.btn-leer-mas:hover {
+    background-color:darkmagenta;
+}
+
+/* Noticia Completa */
+.noticia-detalle {
+    max-width: 600px;
+    margin: 20px auto;
+    
+}
+
+.noticia-detalle img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+    
+}
+
+.noticia-detalle h2 {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+/*Footer Menu*/
+.logo-footer {
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            position: relative;
+            font-size:small;
+        }
+        .footer-menu {
+            position: relative;
+            background: #522231;
+        }
+        .footer-menu .container {
+            padding: 15px 0;
+            border-top: 1px solid #522231;
+        }
+        .footer-menu .f-menu {
+            font-size: 0;
+            text-align: center;
+        }
+        .footer-menu .f-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            margin-right: 15px;
+            padding-right: 15px;
+            border-right: 1px solid #ffffff;
+        }
+        .footer-menu .f-menu a:hover {
+            color: #FF6F61;
+        }
+        .footer-menu .f-menu a:last-child {
+            margin-right: 0;
+            padding-right: 0;
+            border-right: none;
+        }
+        /*Copyright*/
+
+        .footer-bottom {
+            position: relative;
+            background: #9d1746;
+        }
+        .footer-bottom .copyright {
+            text-align: center;
+            color: white;
+            
+        }
+        .footer-bottom .copyright a {
+            color: white;
+            text-decoration: none;
+        }
+        .footer-bottom .copyright a:hover{
+            color: #FF6F61;
+        }
+/* Footer Columns */
+.footer-columns {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .footer-columns div {
+            flex: 1;
+            min-width: 200px;
+            color: #fff;
+        }
+        .footer-columns div h4 {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .categories, .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        /* Estilo de los botones (accordion) */
+        .accordion {
+            background-color: #9d1746;
+            color: white;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.1rem;
+            border: 2px solid white; 
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .accordion:hover {
+            background-color: #522231; 
+            color: #FF6F61; 
+        }
+
+        .accordion.active {
+            background-color: #522231; 
+            color: #FF6F61; 
+        }
+
+        /* Estilos para los enlaces rápidos */
+        .quick-links {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .quick-links li {
+            margin: 8px 0;
+        }
+        .quick-links a {
+            color: #fff;
+            text-decoration: none; 
+            font-size: 1em;
+            transition: color 0.3s ease;
+        }
+        .quick-links a:hover {
+            color: #FF6F61; 
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: space-around;
+            }
+            .trending-section {
+                flex-wrap: wrap;
+                text-align: center;
+            }
+            .contact-section {
+                flex-direction: column;
+            }
+            .footer-columns {
+                flex-direction: column;
+            }
+            .news-section {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /*Footer Menu*/
+        .logo-footer {
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            position: relative;
+            font-size:small;
+        }
+        .footer-menu {
+            position: relative;
+            background: #522231;
+        }
+        .footer-menu .container {
+            padding: 15px 0;
+            border-top: 1px solid #522231;
+        }
+        .footer-menu .f-menu {
+            font-size: 0;
+            text-align: center;
+        }
+        .footer-menu .f-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            margin-right: 15px;
+            padding-right: 15px;
+            border-right: 1px solid #ffffff;
+        }
+        .footer-menu .f-menu a:hover {
+            color: #FF6F61;
+        }
+        .footer-menu .f-menu a:last-child {
+            margin-right: 0;
+            padding-right: 0;
+            border-right: none;
+        }
+        /*Copyright*/
+
+        .footer-bottom {
+            position: relative;
+            background: #9d1746;
+        }
+        .footer-bottom .copyright {
+            text-align: center;
+            color: white;
+            
+        }
+        .footer-bottom .copyright a {
+            color: white;
+            text-decoration: none;
+        }
+        .footer-bottom .copyright a:hover{
+            color: #FF6F61;
+        }
+        .center-img {
+            display: block;
+            margin: auto;
+            float: inline-start;
+            width: 900px;
+            height: 400px;
+        }
+        .tarjeta img{
+        float: inline-end;
+        width: 900px;
+        height: 400px;
+        margin-right: 20px;
+        }
+</style>
+<body>
+     <!-- Logo y navegador -->
+<div class="header-container">
+    <div class="logo">
+        <span class="valle">INFO</span><span class="news">SISTEMAS</span>
+    </div>
+    <div class="search-container">
+        <input type="text" placeholder="Buscar...">
+        <button><i class="fas fa-search"></i></button>
+    </div>
+</div>
+
+<!-- Navigation -->
+    <div class="nav-bar">
+        <nav>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i> 
+            </div>
+
+            <ul id="menu" class="menu">
+                <li><a href="./index.html">Inicio</a></li>
+                <li class="categories">
+                    <a href="#categorias">Categorías</a>
+                    <div class="submenu">
+                        <a href="#">Deporte</a>
+                        <a href="#">Entretenimiento</a>
+                        <a href="#">Ciencia</a>
+                        <a href="#">Tecnología</a>  
+                    </div>
+                </li>
+                <li><a href="#">Noticias Locales</a></li>
+                <li><a href="#">Noticias Internacionales</a></li>
+                <li><a href="./contacto.html">Contacto</a></li>
+            </ul>
+            <div class="social"> 
+                <a href=""><i class="fab fa-twitter"></i></a>
+                <a href=""><i class="fab fa-facebook-f"></i></a>
+                <a href=""><i class="fab fa-linkedin-in"></i></a>
+                <a href=""><i class="fab fa-instagram"></i></a>
+                <a href=""><i class="fab fa-youtube"></i></a>
+            </div> 
+        </nav>
+    </div>
+    <h1> Juez rechaza la petición de Sean "Diddy" Combs de silenciar a posibles testigos y a sus abogados </h1>
+    <img src="https://bloximages.newyork1.vip.townnews.com/elvocero.com/content/tncms/assets/v3/editorial/9/4a/94a66832-9ea4-11ef-ba5c-a74f710d7a58/672f6db985dce.image.png?resize=400%2C270" alt="Desc" class="center-img"> 
+    <p> Juez rechaza la petición de Sean "Diddy" Combs de silenciar a posibles testigos y a sus abogados</p>
+    <p> El equipo de Combs solicitó una orden de silencio para impedir que los testigos potenciales y sus abogados hablaran públicamente después de que se presentaran más de una decena de demandas civiles alegando agresiones sexuales y a raíz de las entrevistas concedidas a los medios de comunicación por un testigo tras comparecer ante el jurado investigador. El juez Arun Subramanian dijo que está equilibrando el derecho de Combs a un juicio justo con los derechos de la Primera Enmienda de sus presuntas víctimas.</p>
+<p> Combs se ha declarado inocente de los cargos y ha dicho que las acusaciones de las demandas civiles, incluido el abuso de menores, son “absolutamente falsas”.
+
+    A Combs se le denegó la libertad bajo fianza en dos ocasiones, primero por el juez de instrucción ante el que compareció y de nuevo por el juez de primera instancia al que se asignó el caso. Ese juez se recusó y el caso fue transferido al juez Subramanian.</p>
+<div class="tarjeta"> 
+<img src="data:image/jpeg;base64,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" alt="" class="tarjeta">
+    <p>La orden se produjo al tiempo que el equipo legal de Combs presentaba una nueva solicitud de excarcelación basada en nueva información, según ellos, que socava las acusaciones de la Fiscalía de que Combs obligó a mujeres y a otras personas a participar en actos sexuales de varios días de duración impulsados por las drogas.</p>
+<p> Los fiscales han argumentado que Combs supone una amenaza física para los testigos y las víctimas, y que participó en la manipulación de testigos al tener contacto con ciertas personas relacionadas con el caso.</p>
+<p> En una presentación judicial con numerosas redacciones, los abogados de Combs afirman que la información que han obtenido de los fiscales “niega” la afirmación del Gobierno de que hay una segunda víctima, además de la “Víctima 1” identificada en la acusación y debilita la alegación de los fiscales de manipulación de testigos.</p>
+<p> “El nuevo material demuestra que el Gobierno tergiversó previamente el peso de las pruebas. Y socava la alegación del Gobierno de que el señor Combs representa un peligro”, escribieron los abogados de Combs al juez.</p>
+<p> El equipo legal de Combs dijo que hay pruebas que socavan la acusación principal de que traficó sexualmente con su exnovia de larga duración, identificada como “Víctima 1” en la acusación.</p>
+<p> “El Gobierno recicló las alegaciones de la ‘Víctima 1’, pero el caso requiere su posible testimonio, que será refutado por años de correspondencia escrita y otras pruebas documentales”. </p>
+<p> El equipo de Combs propuso un paquete de fianza que es similar a los paquetes rechazados anteriormente por los jueces. Además de la fianza de US$ 50 millones, firmada conjuntamente por Combs, su madre, sus hijos adultos y otros, proponen el arresto domiciliario con monitorización por GPS y vigilancia 24/7 por seguridad privada.
+
+    Las visitas estarían limitadas a los abogados y familiares de Combs según la última propuesta. En su anterior propuesta de fianza, Combs no pretendía excluir de las visitas a empleados, amigos u otras personas.</p>
+</div>
+<br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+       <!-- Footer -->
+<footer class="footer" style="background: #9d1746;">
+    <div class="footer-columns container">
+        <div>
+            <h4 class="logo-footer">INFOSISTEMAS</h4>
+            <div class="social">
+                <a href=""><i class="fab fa-twitter"></i></a>
+                <a href=""><i class="fab fa-facebook-f"></i></a>
+                <a href=""><i class="fab fa-linkedin-in"></i></a>
+                <a href=""><i class="fab fa-instagram"></i></a>
+                <a href=""><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+        <div>
+            <h4>Categorías</h4>
+            <section id="categorias"></section>
+            <div class="categories">
+                <button class="accordion">Política</button>
+                <button class="accordion">Corporativo</button>
+                <a href="./PaginaPrincipalDeportes.html"></a><button class="accordion">Deportes</button>
+                <button class="accordion">Salud</button>
+                <a href="./Educacion.html"><button class="accordion">Educación</button></a>
+                <button class="accordion">Ciencia</button>
+                <button class="accordion">Tecnología</button>
+                <a href="./PaginaPrincipalEntretenimiento.html"></a><button class="accordion">Entretenimiento</button>
+            </div>            
+        </div>
+        <div>
+            <h4>Etiquetas</h4>
+            <div class="tags">
+                <button class="accordion">Politica</button>
+                <button class="accordion">Corporativo</button>
+                <a href="./PaginaPrincipalDeportes.html"></a><button class="accordion">Deportes</button>
+                <button class="accordion">Salud</button>
+                <a href="./Educacion.html">
+                    <button class="accordion">Educación</button>
+                </a>
+                <button class="accordion">Ciencia</button>
+                <button class="accordion">Tecnología</button>
+                <a href="./PaginaPrincipalEntretenimiento.html"></a><button class="accordion">Entretenimiento</button>
+            </div>
+        </div>
+        <div>
+            <div>
+                <h4>Enlaces rápidos</h4>
+                <ul class="quick-links">
+                    <li><a href="./Acerca de.html">Acerca de</a></li>                 
+                    <li><a href="./privacidadpolitica.html">Privacidad y política</a></li>
+                    <li><a href="./TerminosyCondiciones.html">Términos y condiciones</a></li>
+                </ul>
+            </div>
+            
+        </div>
+        
+        </div>
+        <br>
+        <br>
+        <div class="footer-menu">
+            <div class="container">
+                <div class="f-menu">
+                    <a href="./Terminosdeuso.html">Términos de uso</a>
+                    <a href="./privacidadpolitica.html">Política de privacidad</a>
+                    <a href="./cookies.html">Cookies</a>
+                    <a href="./Accesibilidad.html">Ayuda de accesibilidad</a>
+                    <a href="./Publicidadnosotros.html">Publicidad con nosotros</a>
+                    <a href="./contacto.html">Contáctanos</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+        <!-- Copyright -->
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="copyright">
+                        <p>Copyright &copy; <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">INFOSISTEMAS</a>. Todos los derechos reservados</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+</html>
